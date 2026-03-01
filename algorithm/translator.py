@@ -40,5 +40,3 @@ def translator(config):
         "starting_values": starting_values_fn,
     }
     return algorithm_functions
-
-    run_algorithm = algorithm(**algorithm_functions)
