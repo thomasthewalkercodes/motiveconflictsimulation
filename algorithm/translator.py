@@ -1,11 +1,9 @@
-import yaml
-from algorithm.algorithm import algorithm
-from pathlib import Path
-from algorithm.influence import influence as influence_module
-
-_CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_files"
-CONFIG = _CONFIGURATION_DIRECTION / "default_configuration.yaml"
-config = yaml.safe.load(CONFIG.open())
+import algorithm.influence as influence_module
+import algorithm.activation_check as activation_check_module
+import algorithm.growth as growth_module
+import algorithm.decay as decay_module
+import algorithm.starting_values as starting_values_module
+import functools
 
 
 def translator(config):

@@ -1,14 +1,11 @@
 import numpy as np
-import influence
-
-influence = influence.config["chosen_influence"]
 
 
 def algorithm(steps, activation_check, growth, influence, decay, starting_values):
     history = {"step": [], "satisfaction levels": [], "active_motive": []}
     active_motive = None
-    satisfaction_levels = starting_values(config)
-    influence_matrix = influence(config)
+    satisfaction_levels = starting_values()
+    influence_matrix = influence(satisfaction_levels)
 
     for step in range(steps):
 
@@ -27,13 +24,8 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
         satisfaction_levels = np.clip(satisfaction_levels, -1, 1)
         satisfaction_levels = np.round(satisfaction_levels, 5)
 
-        # Get current satisfaction levels and label them
-        satisfaction_levels = satisfaction_leves.loc["satisfaction"]
-
         # saving history
         history["step"].append(step)
-        history["satisfaction levels"].append(
-            satisfaction_levels.loc["satisfaction"].copy()
-        )
+        history["satisfaction levels"].append(satisfaction_levels.copy())
         history["active_motive"].append(active_motive)
     return history
