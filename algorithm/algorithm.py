@@ -4,9 +4,11 @@ import influence
 influence = influence.config["chosen_influence"]
 
 
-def algorithm(steps, activation_check, growth, influence, decay, satisfaction_levels):
+def algorithm(steps, activation_check, growth, influence, decay, starting_values):
     history = {"step": [], "satisfaction levels": [], "active_motive": []}
     active_motive = None
+    satisfaction_levels = starting_values(config)
+    influence_matrix = influence(config)
 
     for step in range(steps):
 
@@ -15,18 +17,18 @@ def algorithm(steps, activation_check, growth, influence, decay, satisfaction_le
 
         # Apply growth and influence if a motive is active
         if active_motive is not None:
-            satisfaction_matrix = growth(satisfaction_matrix, active_motive)
-            satisfaction_matrix = influence(satisfaction_matrix, active_motive)
+            satisfaction_levels = growth(satisfaction_levels, active_motive)
+            satisfaction_levels += influence_matrix.iloc[active_motive]
 
         # Apply decay after growth and influence (does not apply to an active motive)
-        satisfaction_matrix = decay(satisfaction_matrix, active_motive)
+        satisfaction_levels = decay(satisfaction_levels, active_motive)
 
         # configure the matrix (clip and round values)
-        satisfaction_matrix = np.clip(satisfaction_matrix, -1, 1)
-        satisfaction_matrix = np.round(satisfaction_matrix, 5)
+        satisfaction_levels = np.clip(satisfaction_levels, -1, 1)
+        satisfaction_levels = np.round(satisfaction_levels, 5)
 
         # Get current satisfaction levels and label them
-        satisfaction_levels = satisfaction_matrix.loc["satisfaction"]
+        satisfaction_levels = satisfaction_leves.loc["satisfaction"]
 
         # saving history
         history["step"].append(step)
