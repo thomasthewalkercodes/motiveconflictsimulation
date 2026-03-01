@@ -1,0 +1,55 @@
+# ─── Baseline Configuration ───────────────────────────────────
+# This is the default configuration
+# use it to create new experimental conditions.
+# Copy and paste this file, be sure to have the tag, notes & general settings
+# and the chosen_xxx, together with their parameters. 
+# Other information can be deleted to keep a better overview.
+# ──────────────────────────────────────────────────────────────
+
+tag: "Naming the most important change or what is being looked at" #make sure to use _ instead of space
+notes: "Explain the change specifically and why we do this in some sentences."
+
+# General settings
+seed: 42
+steps: 10
+n_simulations: 3
+n_motives: 8
+save_history: true
+logged: true
+
+# Influence
+influence:
+  chosen_influence: sinus_wave #options: all of the below
+  sinus_wave:
+    amplitude: 0.1
+    elevation: 0.2
+  sub_dom_conflict:
+    strength: 0.1
+  warm_cold_conflict:
+    strength: 0.1
+  custom_interactions: {} #overrides all above if not empty
+
+# starting_values
+starting_values:
+  chosen_starting_values: random_sat_matrix #options: all of the below
+  random_sat_matrix:
+     mean: 0.2
+     sd: 0.2
+  fixed_sat_matrix: 
+    satisfaction: [0.2]
+
+# Decay
+decay:
+  chosen_decay: sinus_decay #options: all of the below
+  sinus_decay:
+    start_motive: 3
+    amplitude: 0.05
+    elevation: 0.06
+  flat_decay:
+    decay_rate: 0.02
+
+# Growth rules
+growth: 
+  chosen_growth: fixed_growth #options: all of the below
+  fixed_growth:
+    growth_rate: 1
