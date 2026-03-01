@@ -4,11 +4,13 @@ from pathlib import Path
 _CONFIGURATION_DIRECTION = (
     Path(__file__).resolve().parent.parent / "configuration_files"
 )
-
 CONFIG = _CONFIGURATION_DIRECTION / "default_configuration.yaml"
 
 
 def main(config):
+    # region Comment
+    # This part here gets the YAML configurations and assigns the functions to the algorithm
+    # endregion
     algorithm_functions = {
         "steps": config["steps"],
         "activation_check": getattr(

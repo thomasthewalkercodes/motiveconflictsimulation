@@ -1,19 +1,10 @@
 # imagine a function here that
+class somethingsomething:
+    def linear_check(satisfaction_levels, active_motive):
+        if active_motive is None and any(satisfaction_levels < 0):
+            active_motive = np.argmin(satisfaction_levels)
+        else:
+            if satisfaction_levels[active_motive] >= 1:
+                active_motive = None
 
-if active_motive is None or activation_check(active_motive) == True:
-    if unsatisfied_motives:
-        active_motive = activation_choice(unsatisfied_motives)
-    else:
-        active_motive = None
-
-
-unsatisfied_motives = satisfaction_check(satisfaction_levels)  # not needed?
-
-
-def select_unsatisfied_behavior(satisfaction_levels, unsatisfied_octants):
-    if not unsatisfied_octants:
-        return None
-    # Find the index of the most dissatisfied (lowest satisfaction)
-    values = satisfaction_levels[unsatisfied_octants]
-    most_dissatisfied_index = np.argmin(values)
-    return unsatisfied_octants[most_dissatisfied_index]
+        return active_motive
