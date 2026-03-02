@@ -24,10 +24,13 @@ def translator(config):
     chosen = config["starting_values"]["chosen_starting_values"]
     params = config["starting_values"][chosen]
     starting_values_fn = functools.partial(
-        getattr(starting_values_module, chosen), **params
+        getattr(starting_values_module, chosen),
+        num_motives=config["n_motives"],
+        **params
     )
     # region Comment
-    # This part here gets the YAML configurations and assigns the functions to the algorithm
+    # This part here gets the YAML configurations and assigns the functions to
+    # the algorithm
     # endregion
     algorithm_functions = {
         "steps": config["steps"],

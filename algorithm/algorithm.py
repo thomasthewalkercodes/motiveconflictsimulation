@@ -15,7 +15,7 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
         # Apply growth and influence if a motive is active
         if active_motive is not None:
             satisfaction_levels = growth(satisfaction_levels, active_motive)
-            satisfaction_levels += influence_matrix.iloc[active_motive]
+            satisfaction_levels += influence_matrix.iloc[active_motive].values
 
         # Apply decay after growth and influence (does not apply to an active motive)
         satisfaction_levels = decay(satisfaction_levels, active_motive)
