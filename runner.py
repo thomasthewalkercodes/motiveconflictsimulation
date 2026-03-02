@@ -13,7 +13,6 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 CONFIG = _CONFIGURATION_DIRECTION / "newname.yaml"  # <- HERE
 config = yaml.safe_load(CONFIG.open())
 
-
 # region Comment
 # This part runs the algorithm and saves the results and config
 # endregion

@@ -1,0 +1,3 @@
+tag,git_commit,steps,n_simulations,seed,activation_check,decay,growth,influence,starting_values
+100'000 sims,1baa5c1,10000,10,42,linear_check,flat_decay,flat_growth,cosinus_influence,random_starting_values
+100'000 sims,1baa5c1,10000,10,42,linear_check,flat_decay,flat_growth,cosinus_influence,random_starting_values

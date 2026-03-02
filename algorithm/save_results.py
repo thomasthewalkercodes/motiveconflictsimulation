@@ -10,6 +10,24 @@ from pathlib import Path
 # This one is used in the runner.py file
 
 
+def log_run(config, git_hash):
+    log_path = Path("master_log.csv")
+    row = {
+        "tag": config["tag"],
+        "git_commit": git_hash,
+        "steps": config["steps"],
+        "n_simulations": config["n_simulations"],
+        "seed": config["seed"],
+        "activation_check": config["activation_check"]["chosen_activation_check"],
+        "decay": config["decay"]["chosen_decay"],
+        "growth": config["growth"]["chosen_growth"],
+        "influence": config["influence"]["chosen_influence"],
+        "starting_values": config["starting_values"]["chosen_starting_values"],
+    }
+    df = pd.DataFrame([row])
+    df.to_csv(log_path, mode="a", header=not log_path.exists(), index=False)
+
+
 def setup_run(config, CONFIG):
     np.random.seed(config["seed"])  # setting both seeds as they are different
     random.seed(config["seed"])
@@ -17,6 +35,8 @@ def setup_run(config, CONFIG):
     git_hash = subprocess.run(
         ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True
     ).stdout.strip()
+
+    log_run(config, git_hash)
 
     run_name = f"{config['tag']}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
     run_dir = Path("runs") / run_name
