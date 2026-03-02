@@ -6,9 +6,12 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
     active_motive = None
     satisfaction_levels = starting_values()
     influence_matrix = influence(satisfaction_levels)
+    history["influence_matrix"] = influence_matrix.copy()
+    history["step"].append(0)
+    history["satisfaction levels"].append(satisfaction_levels.copy())
+    history["active_motive"].append(active_motive)
 
-    for step in range(steps):
-
+    for step in range(1, steps):
         # check if there is an active motive or if something has to get activated
         active_motive = activation_check(satisfaction_levels, active_motive)
 
@@ -28,4 +31,5 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
         history["step"].append(step)
         history["satisfaction levels"].append(satisfaction_levels.copy())
         history["active_motive"].append(active_motive)
+
     return history
