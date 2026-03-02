@@ -58,7 +58,8 @@ def save_simulation(history, sim, run_dir):
         columns=[
             f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))
         ],  # the +1 is cuz it usually counts from 0 to 7, but we need 1-8 because
-        # we are humans (plus the csv in the end is better with a 1 as the first motive and not a 0)
+        # we are humans (plus the csv in the end is better with a 1
+        # as the first motive and not a 0)
     )
     df.insert(0, "step", history["step"])
     df.insert(1, "active_motive", pd.array(history["active_motive"], dtype="Int64") + 1)
