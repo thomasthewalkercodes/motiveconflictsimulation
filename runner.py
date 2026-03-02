@@ -10,14 +10,14 @@ from algorithm.save_results import save_influence_matrix, save_simulation, setup
 
 _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_files"
 # write here what configuration file you want to use!
-CONFIG = _CONFIGURATION_DIRECTION / "newname.yaml"  # <- HERE
+CONFIG = _CONFIGURATION_DIRECTION / "decay_stuff.yaml"  # <- HERE
 config = yaml.safe_load(CONFIG.open())
 
 # region Comment
 # This part runs the algorithm and saves the results and config
 # endregion
 if __name__ == "__main__":
-    run_dir = setup_run(config, CONFIG)
+    run_dir = setup_run(config)
     for sim in range(config["n_simulations"]):
         history = algorithm(
             **translator(config)

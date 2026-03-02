@@ -6,13 +6,13 @@
 # Other information can be deleted to keep a better overview.
 # ──────────────────────────────────────────────────────────────
 
-tag: "0.3 decay #make sure to use _ instead of space
-notes: "cos wave check"
+tag: "0.1 decay" #make sure to use _ instead of space
+notes: "larger decay"
 
 # General settings
 seed: 42
-steps: 100
-n_simulations: 10
+steps: 200
+n_simulations: 2
 n_motives: 8
 
 # Influence
@@ -44,7 +44,7 @@ decay:
     amplitude: 0.05
     elevation: 0.06
   flat_decay:
-    decay_rate: 0.04
+    decay_rate: 0.1
 
 # Growth rules
 growth: 

@@ -1,5 +1,5 @@
 import pandas as pd
-import shutil
+import yaml
 import subprocess
 import random
 import numpy as np
@@ -28,7 +28,7 @@ def log_run(config, git_hash):
     df.to_csv(log_path, mode="a", header=not log_path.exists(), index=False)
 
 
-def setup_run(config, CONFIG):
+def setup_run(config):
     np.random.seed(config["seed"])  # setting both seeds as they are different
     random.seed(config["seed"])
 
@@ -41,11 +41,10 @@ def setup_run(config, CONFIG):
     run_name = f"{config['tag']}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
     run_dir = Path("runs") / run_name
     os.makedirs(run_dir)  # this here creates the folder on disk
-    shutil.copy(
-        CONFIG, run_dir / f"{config['tag']}.yaml"
-    )  # freeze copying Yaml configs to the right folder
-    with open(run_dir / f"{config['tag']}.yaml", "a") as f:
+    with open(run_dir / f"{config['tag']}.yaml", "w") as f:
+        yaml.dump(config, f)
         f.write(f"\ngit_commit: {git_hash}\n")  # save the git hash for reproducibility
+
     os.makedirs(
         run_dir / "influence_matrices", exist_ok=True
     )  # subfolder for influence matrix for each run
