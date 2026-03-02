@@ -1,0 +1,58 @@
+import pandas as pd
+import shutil
+import subprocess
+import random
+import numpy as np
+import os
+from datetime import datetime
+from pathlib import Path
+
+# This one is used in the runner.py file
+
+
+def setup_run(config, CONFIG):
+    np.random.seed(config["seed"])  # setting both seeds as they are different
+    random.seed(config["seed"])
+
+    git_hash = subprocess.run(
+        ["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True
+    ).stdout.strip()
+
+    run_name = f"{config['tag']}_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}"
+    run_dir = Path("runs") / run_name
+    os.makedirs(run_dir)  # this here creates the folder on disk
+    shutil.copy(
+        CONFIG, run_dir / f"{config['tag']}.yaml"
+    )  # freeze copying Yaml configs to the right folder
+    with open(run_dir / f"{config['tag']}.yaml", "a") as f:
+        f.write(f"\ngit_commit: {git_hash}\n")  # save the git hash for reproducibility
+    os.makedirs(
+        run_dir / "influence_matrices", exist_ok=True
+    )  # subfolder for influence matrix for each run
+    return run_dir
+
+
+def save_simulation(history, sim, run_dir):
+    df = pd.DataFrame(
+        history["satisfaction levels"],
+        columns=[
+            f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))
+        ],  # the +1 is cuz it usually counts from 0 to 7, but we need 1-8 because
+        # we are humans (plus the csv in the end is better with a 1 as the first motive and not a 0)
+    )
+    df.insert(0, "step", history["step"])
+    df.insert(1, "active_motive", pd.array(history["active_motive"], dtype="Int64") + 1)
+    df.to_csv(run_dir / f"simulation_{sim}.csv", index=False)
+
+
+def save_influence_matrix(history, sim, run_dir):
+    df = pd.DataFrame(
+        history["influence_matrix"],
+        columns=[
+            f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))
+        ],
+        index=[f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))],
+    )
+    df.to_csv(
+        run_dir / "influence_matrices" / f"influence_matrix_{sim}.csv", index=True
+    )
