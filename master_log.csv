@@ -1,3 +1,0 @@
-tag,git_commit,steps,n_simulations,seed,activation_check,activation_check_params,decay,decay_params,growth,growth_params,influence,influence_params,starting_values,starting_values_params
-First_Hypothesis_steps_50_amplitude_0_elevation_0_high_0.1_satisfaction_0.2_decay_rate_0.01,19640b3,50,30,42,linear_check,{},flat_decay,{'decay_rate': 0.01},flat_growth,{'growth_rate': 1},sinus_influence,"{'amplitude': 0, 'elevation': 0}",random_starting_values,"{'low': 0, 'high': 0.1}"
-First_Hypothesis_00000,b05c7de,50,30,42,linear_check,{},flat_decay,{'decay_rate': 0.01},flat_growth,{'growth_rate': 1},sinus_influence,"{'amplitude': 0, 'elevation': 0}",random_starting_values,"{'low': 0, 'high': 0.1}"
