@@ -1,2 +1,0 @@
-tag,git_commit,steps,n_simulations,seed,activation_check,activation_check_params,decay,decay_params,growth,growth_params,influence,influence_params,starting_values,starting_values_params
-First_Hypothesis_00000,df968cc,50,30,42,linear_check,{},flat_decay,{'decay_rate': 0.01},flat_growth,{'growth_rate': 1},cosinus_influence,{},random_starting_values,"{'low': 0, 'high': 0.1}"
