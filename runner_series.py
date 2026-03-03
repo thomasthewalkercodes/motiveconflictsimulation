@@ -38,13 +38,12 @@ if __name__ == "__main__":
     paths = [p for p, _ in axes]
     values = [v for _, v in axes]
 
-    for combo in itertools.product(*values):
+    for i, combo in enumerate(itertools.product(*values)):
         config = copy.deepcopy(series)
         tag_parts = [series["tag"]]
         for path, value in zip(paths, combo):
             set_path(config, path, value)
-            tag_parts.append(f"{path[-1]}_{value}")
-        config["tag"] = "_".join(str(p) for p in tag_parts)
+        config["tag"] = f"{series['tag']}_{i:05d}"
 
         run_dir = setup_run(config)
         for sim in range(config["n_simulations"]):
