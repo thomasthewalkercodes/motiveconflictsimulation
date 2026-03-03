@@ -1,0 +1,63 @@
+# ─── Baseline Configuration ───────────────────────────────────
+# This is the default configuration
+# use it to create new experimental conditions.
+# Copy and paste this file, be sure to have the tag, notes & general settings
+# and the chosen_xxx, together with their parameters. 
+# Other information can be deleted to keep a better overview.
+# to test different chosen_influence for example, you just need to repeat
+# the "chosen_influence: xxx" to get it in the combinatorics
+# ──────────────────────────────────────────────────────────────
+
+tag: "Naming the most important change or what is being looked at" #make sure to use _ instead of space
+notes: "Explain the change specifically and why we do this in some sentences."
+
+# General settings
+seed: 42
+steps: 10
+n_simulations: [3,10,1000] # simething like this
+n_motives: 8
+
+# Influence
+influence:
+  chosen_influence: sinus_influence #options: all of the below
+  sinus_influence:
+    amplitude: 0.1
+    elevation: 0.2
+  chosen_influence: sub_dom_conflict # now this one gets added in the combinatorics
+  
+  sub_dom_conflict:
+    strength: 0.1
+  warm_cold_conflict:
+    strength: 0.1
+  custom_interactions: {} #overrides all above if not empty
+
+# starting_values
+starting_values:
+  chosen_starting_values: random_starting_values #options: all of the below
+  random_starting_values:
+    low: -1
+    high: 1
+  fixed_sat_matrix: 
+    satisfaction: [[0.2], 0.3] #because this is not a scalar, maybe fix in the future?
+
+# Decay
+decay:
+  chosen_decay: flat_decay #options: all of the below
+  sinus_decay:
+    start_motive: 3
+    amplitude: 0.05
+    elevation: 0.06
+  flat_decay:
+    decay_rate: 0.02
+
+# Growth rules
+growth: 
+  chosen_growth: flat_growth #options: all of the below
+  flat_growth:
+    growth_rate: 1
+
+# activation check
+activation_check:
+  chosen_activation_check: linear_check #options: all of the below
+  linear_check: {}
+

@@ -1,7 +1,9 @@
 from algorithm.translator import translator
 from algorithm.algorithm import algorithm
 from algorithm.save_results import save_simulation, save_influence_matrix, setup_run
-import yaml, copy, itertools
+import copy
+import itertools
+import yaml
 from pathlib import Path
 
 

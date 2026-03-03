@@ -14,8 +14,6 @@ seed: 42
 steps: 10
 n_simulations: 3
 n_motives: 8
-save_history: true
-logged: true
 
 # Influence
 influence:
