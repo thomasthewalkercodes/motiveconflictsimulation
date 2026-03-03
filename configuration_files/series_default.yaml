@@ -19,12 +19,12 @@ n_motives: 8
 
 # Influence
 influence:
-  chosen_influence: sinus_influence #options: all of the below
+  chosen_influence: cosinus_influence #options: all of the below
   sinus_influence:
     amplitude: 0.1
     elevation: 0.2
   chosen_influence: sub_dom_conflict # now this one gets added in the combinatorics
-  
+
   sub_dom_conflict:
     strength: 0.1
   warm_cold_conflict:
