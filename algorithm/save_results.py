@@ -19,11 +19,29 @@ def log_run(config, git_hash):
         "n_simulations": config["n_simulations"],
         "seed": config["seed"],
         "activation_check": config["activation_check"]["chosen_activation_check"],
+        "activation_check_params": str(
+            config["activation_check"].get(
+                config["activation_check"]["chosen_activation_check"], {}
+            )
+        ),
         "decay": config["decay"]["chosen_decay"],
+        "decay_params": str(config["decay"].get(config["decay"]["chosen_decay"], {})),
         "growth": config["growth"]["chosen_growth"],
+        "growth_params": str(
+            config["growth"].get(config["growth"]["chosen_growth"], {})
+        ),
         "influence": config["influence"]["chosen_influence"],
+        "influence_params": str(
+            config["influence"].get(config["influence"]["chosen_influence"], {})
+        ),
         "starting_values": config["starting_values"]["chosen_starting_values"],
+        "starting_values_params": str(
+            config["starting_values"].get(
+                config["starting_values"]["chosen_starting_values"], {}
+            )
+        ),
     }
+
     df = pd.DataFrame([row])
     df.to_csv(log_path, mode="a", header=not log_path.exists(), index=False)
 

@@ -29,7 +29,7 @@ def set_path(d, path, value):
 
 
 _DIR = Path(__file__).resolve().parent / "configuration_files"
-SERIES_CONFIG = _DIR / "example.yaml"  # <- PASS YOUR YAML HERE
+SERIES_CONFIG = _DIR / "Firstseries.yaml"  # <- PASS YOUR YAML HERE
 
 series = yaml.safe_load(SERIES_CONFIG.open())
 

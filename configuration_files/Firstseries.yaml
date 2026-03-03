@@ -41,7 +41,7 @@ decay:
     amplitude: 0.05
     elevation: 0.06
   flat_decay:
-    decay_rate: [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.3, 0.5, 0.8, 1]
+    decay_rate: [0.01, 0.02, 0.05, 0.1, 0.15, 0.2, 0.5, 1]
 
 # Growth rules
 growth: 
