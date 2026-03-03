@@ -20,7 +20,7 @@ n_motives: 8
 # Influence
 influence:
   chosen_influence: cosinus_influence #options: all of the below
-  sinus_influence:
+  cosinus_influence:
     amplitude: [0, 0.1, 0.2, 0.3, 0.4]
     elevation: [0, 0.1, 0.2, 0.3, 0.4]
 
