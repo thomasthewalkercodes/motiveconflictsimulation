@@ -8,7 +8,7 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "First Hypothesis" #make sure to use _ instead of space
+tag: "First_Hypothesis" #make sure to use _ instead of space
 notes: "To figure out how many simulations we should do"
 
 # General settings
