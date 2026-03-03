@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
     for combo in itertools.product(*values):
         config = copy.deepcopy(series)
-        tag_parts = [series["tag_prefix"]]
+        tag_parts = [series["tag"]]
         for path, value in zip(paths, combo):
             set_path(config, path, value)
             tag_parts.append(f"{path[-1]}_{value}")
