@@ -41,5 +41,81 @@ def plot_sd(BASE, stats):
     plt.show()
 
 
+def compare_steps(BASE):
+    master = pd.read_csv(os.path.join(BASE, "../../master_log.csv"))
+    df = pd.read_csv(os.path.join(BASE, "active_proportion.csv"))
+
+    condition_cols = [
+        "decay_params",
+        "growth_params",
+        "influence_params",
+        "starting_values_params",
+    ]
+    df = df.merge(master[condition_cols + ["tag"]], on="tag")
+
+    # Compute mean/std of active proportion across all step variants of the same condition
+    steps_stats = (
+        df.groupby(condition_cols)["active proportion"]
+        .agg(STEPSmean="mean", STEPSsd="std")
+        .round(3)
+        .reset_index()
+    )
+
+    # Merge back so every row gets the pooled stats
+    df = df.merge(steps_stats, on=condition_cols)
+
+    # Drop the condition columns (they were just for grouping)
+    df = df.drop(columns=condition_cols)
+
+    df.to_csv(os.path.join(BASE, "active_proportion.csv"), index=False)
+    print(df.head())
+
+
+def compare_steps(BASE):
+    master = pd.read_csv(os.path.join(BASE, "../../master_log.csv"))
+    df = pd.read_csv(os.path.join(BASE, "active_proportion.csv"))
+
+    condition_cols = [
+        "decay_params",
+        "growth_params",
+        "influence_params",
+        "starting_values_params",
+    ]
+
+    # Attach condition columns to each row via tag
+    df = df.merge(master[condition_cols + ["tag"]], on="tag")
+
+    # Compute mean/std of active proportion across all step variants of the same condition
+    steps_stats = (
+        df.groupby(condition_cols)["active proportion"]
+        .agg(STEPSmean="mean", STEPSsd="std")
+        .round(3)
+        .reset_index()
+    )
+
+    # Merge back so every row gets the pooled stats
+    df = df.merge(steps_stats, on=condition_cols)
+
+    # Drop the condition columns (they were just for grouping)
+    df = df.drop(columns=condition_cols)
+
+    df.to_csv(os.path.join(BASE, "active_proportion.csv"), index=False)
+    print("Mean StepsSD:", steps_stats["STEPSsd"].mean().round(3))
+    print("Max StepsSD", steps_stats["STEPSsd"].max().round(3))
+    return df
+
+
+def plot_stepssd(BASE, stats):
+    stats["STEPSsd"].plot.hist(bins=20, edgecolor="black")
+    plt.xlabel("Standard Deviation")
+    plt.ylabel("Count")
+    plt.title("Distribution of STEPsd in active proportion across conditions & steps")
+    plt.tight_layout()
+    plt.savefig(os.path.join(BASE, "STEPsd_distribution.png"))
+    plt.show()
+
+
 stats = meanSD(BASE)
 plot_sd(BASE, stats)
+df = compare_steps(BASE)
+plot_stepssd(BASE, df)
