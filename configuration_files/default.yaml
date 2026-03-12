@@ -40,7 +40,7 @@ starting_values:
 decay:
   chosen_decay: flat_decay #options: all of the below
   sinus_decay:
-    start_motive: 3
+    focus_motive: 0
     amplitude: 0.05
     elevation: 0.06
   flat_decay:

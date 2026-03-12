@@ -25,3 +25,7 @@ def cosinus_influence(satisfaction_levels, amplitude, elevation):
         columns=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
         index=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
     )
+
+
+def high_single_influence(satisfaction_levels, maximum):
+    matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
