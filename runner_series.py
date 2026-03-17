@@ -32,7 +32,8 @@ _DIR = Path(__file__).resolve().parent / "configuration_files"
 SERIES_CONFIG = _DIR / "Firstseries.yaml"  # <- PASS YOUR YAML HERE
 
 series = yaml.safe_load(SERIES_CONFIG.open())
-# this makes the "all_pairs" readable for the axes list finder and makes series out of it.
+# this makes the "all_pairs" readable for the axes list finder
+# and makes series out of it.
 if series["influence"].get("uni_bi_influence", {}).get("motive_focus") == "all_pairs":
     if series["influence"]["uni_bi_influence"].get("unilateral", True):
         all_pairs = list(itertools.permutations(range(series["n_motives"]), 2))
@@ -40,6 +41,9 @@ if series["influence"].get("uni_bi_influence", {}).get("motive_focus") == "all_p
     else:  # here combinations since the function inside influence handles the rest
         all_pairs = list(itertools.combinations(range(series["n_motives"]), 2))
     series["influence"]["uni_bi_influence"]["motive_focus"] = all_pairs
+
+if series["decay"].get("cos_decay", {}).get("motive_focus") == "all_motives":
+    series["decay"]["cos_decay"]["motive_focus"] = list(range(series["n_motives"]))
 
 if __name__ == "__main__":
     axes = list(find_axes(series))
