@@ -8,7 +8,7 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "uni_bi_decay_series"
+tag: "uni_bi_series_flat"
 notes: "It tests all unilateral (56) and bilateral (28) combinations with cos_decay focusing all motives once, beware growth is set to 2!"
 
 # General settings
@@ -40,7 +40,7 @@ starting_values:
 decay:
   chosen_decay: flat_decay #options: all of the below
   flat_decay:
-    decay_rate: 0.15
+    decay_rate: 0.05
 
 
 # Growth rules

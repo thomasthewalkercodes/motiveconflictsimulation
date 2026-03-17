@@ -8,7 +8,7 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "uni_bi_decay_series"
+tag: "uni_bi_series_cos"
 notes: "It tests all unilateral (56) and bilateral (28) combinations with cos_decay focusing all motives once, beware growth is set to 2!"
 
 # General settings
@@ -41,8 +41,8 @@ decay:
   chosen_decay: cos_decay #options: all of the below
   cos_decay:
     motive_focus: "all_motives"
-    amplitude: 0.05
-    elevation: 0.1
+    amplitude: 0.025
+    elevation: 0.05
 
 # Growth rules
 growth: 
