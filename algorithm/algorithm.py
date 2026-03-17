@@ -1,7 +1,15 @@
 import numpy as np
 
 
-def algorithm(steps, activation_check, growth, influence, decay, starting_values):
+def algorithm(
+    steps,
+    activation_check,
+    growth,
+    influence,
+    decay,
+    starting_values,
+    active_motive_steps,
+):
     history = {"step": [], "satisfaction levels": [], "active_motive": []}
     active_motive = None
     satisfaction_levels = starting_values()
@@ -10,6 +18,7 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
     history["step"].append(0)
     history["satisfaction levels"].append(satisfaction_levels.copy())
     history["active_motive"].append(active_motive)
+    counter = 0
 
     for step in range(1, steps):
         # check if there is an active motive or if something has to get activated
@@ -19,6 +28,7 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
         if active_motive is not None:
             satisfaction_levels = growth(satisfaction_levels, active_motive)
             satisfaction_levels += influence_matrix.iloc[active_motive].values
+            counter += 1
 
         # Apply decay after growth and influence (does not apply to an active motive)
         satisfaction_levels = decay(satisfaction_levels, active_motive)
@@ -31,5 +41,8 @@ def algorithm(steps, activation_check, growth, influence, decay, starting_values
         history["step"].append(step)
         history["satisfaction levels"].append(satisfaction_levels.copy())
         history["active_motive"].append(active_motive)
+        # checks for how many active motives there are
+        if counter >= active_motive_steps:
+            break
 
     return history

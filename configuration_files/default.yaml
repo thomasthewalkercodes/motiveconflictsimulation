@@ -15,6 +15,10 @@ steps: 10
 n_simulations: 3
 n_motives: 8
 
+# should be higher than steps if you dont need it
+# should be x10 or x15 times lower than steps if it should matter
+active_motive_steps: 1000
+
 # Influence
 influence:
   chosen_influence: cosinus_influence #options: all of the below

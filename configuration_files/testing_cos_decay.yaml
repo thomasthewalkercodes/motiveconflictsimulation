@@ -6,8 +6,8 @@
 # Other information can be deleted to keep a better overview.
 # ──────────────────────────────────────────────────────────────
 
-tag: "0.1 decay" #make sure to use _ instead of space
-notes: "larger decay"
+tag: "testing_cos_decay" #make sure to use _ instead of space
+notes: "This config is about testing if a so"
 
 # General settings
 seed: 42
