@@ -36,7 +36,7 @@ starting_values:
 # Decay
 decay:
   chosen_decay: flat_decay #options: all of the below
-  sinus_decay:
+  cos_decay:
     start_motive: 3
     amplitude: 0.05
     elevation: 0.06

@@ -8,7 +8,7 @@ def flat_decay(satisfaction_levels, active_motive, decay_rate=0.3):
             satisfaction_levels[i] -= decay_rate
     return satisfaction_levels
 
-def sinus_decay(satisfaction_levels, active_motive, motive_focus = 0, amplitude, elevation):
+def cos_decay(satisfaction_levels, active_motive, motive_focus = 0, amplitude, elevation):
     for i in range(len(satisfaction_levels)):
         if i != active_motive:
             distance = min(abs(i - motive_focus, len(satisfaction_levels) - abs(i - motive_focus)))
