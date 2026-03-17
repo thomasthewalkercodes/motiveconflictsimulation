@@ -28,14 +28,7 @@ influence:
     motive_focus: "all_pairs" # either "all_pairs" to test everything
   # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
     conflict_strength: 0.2
-    unilateral: True #True if non-mirrored, else false
-
-  chosen_influence: uni_bi_influence #options: all of the below
-  uni_bi_influence:
-    motive_focus: "all_pairs" # either "all_pairs" to test everything
-  # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-    conflict_strength: 0.2
-    unilateral: False #True if non-mirrored, else false
+    unilateral: [True, False] #True if non-mirrored, else false
 
 # starting_values
 starting_values:
