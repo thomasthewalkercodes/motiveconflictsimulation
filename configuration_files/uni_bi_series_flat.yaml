@@ -38,13 +38,10 @@ starting_values:
     high: 1
 # Decay
 decay:
-  chosen_decay: [flat_decay, cos_decay] #options: all of the below
+  chosen_decay: flat_decay #options: all of the below
   flat_decay:
     decay_rate: 0.15
-  cos_decay:
-    motive_focus: "all_motives"
-    amplitude: 0.05
-    elevation: 0.1
+
 
 # Growth rules
 growth: 

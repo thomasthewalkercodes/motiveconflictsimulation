@@ -16,6 +16,7 @@ def log_run(config, git_hash):
         "tag": config["tag"],
         "git_commit": git_hash,
         "steps": config["steps"],
+        "active_motive_steps": config["active_motive_steps"],
         "n_simulations": config["n_simulations"],
         "seed": config["seed"],
         "activation_check": config["activation_check"]["chosen_activation_check"],
