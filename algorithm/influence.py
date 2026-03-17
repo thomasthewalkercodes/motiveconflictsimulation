@@ -27,8 +27,17 @@ def cosinus_influence(satisfaction_levels, amplitude, elevation):
     )
 
 
-def high_single_influence(satisfaction_levels, motive_focus, decay):
+def high_single_influence(satisfaction_levels, motive_focus, conflict_strength, unilateral = True):
     matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
+    matrix[motive_focus[0], motive_focus[1]] = conflict_strength
+    if unilateral = False:
+        matrix[motive_focus[1], motive_focus[0]] = conflict_strength
+    
+    return pd.DataFrame(
+        matrix,
+        columns=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
+        index=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
+    )
 
 
 def custom_influence(satisfaction_levels, custom_values):

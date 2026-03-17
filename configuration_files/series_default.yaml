@@ -33,10 +33,11 @@ influence:
   warm_cold_conflict:
     strength: 0.1
   custom_interactions: {} #overrides all above if not empty
-  high_single_influence:
+  uni_bi_influence:
     motive_focus: "all_pairs" # either "all_pairs" to test everything
   # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
     conflict_strength: 0.1
+    unilateral: True #True if non-mirrored, else false
 
 # starting_values
 starting_values:
