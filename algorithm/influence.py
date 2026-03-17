@@ -27,7 +27,7 @@ def cosinus_influence(satisfaction_levels, amplitude, elevation):
     )
 
 
-def high_single_influence(
+def uni_bi_influence(
     satisfaction_levels, motive_focus, conflict_strength, unilateral=True
 ):
     matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))

@@ -8,7 +8,7 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "this tests the unilateral and bilateral conflict situations with different decay" #make sure to use _ instead of space
+tag: "uni_bi_decay_series"
 notes: "It tests all unilateral (56) and bilateral (28) combinations with cos_decay focusing all motives once, beware growth is set to 2!"
 
 # General settings
@@ -23,14 +23,14 @@ active_motive_steps: 1000
 
 # Influence
 influence:
-  chosen_influence: cosinus_influence #options: all of the below
+  chosen_influence: uni_bi_influence #options: all of the below
   uni_bi_influence:
     motive_focus: "all_pairs" # either "all_pairs" to test everything
   # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
     conflict_strength: 0.2
     unilateral: True #True if non-mirrored, else false
 
-  chosen_influence: cosinus_influence #options: all of the below
+  chosen_influence: uni_bi_influence #options: all of the below
   uni_bi_influence:
     motive_focus: "all_pairs" # either "all_pairs" to test everything
   # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
