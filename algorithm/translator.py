@@ -34,6 +34,7 @@ def translator(config):
     # endregion
     algorithm_functions = {
         "steps": config["steps"],
+        "active_motive_steps": config["active_motive_steps"],
         "activation_check": activation_check_fn,
         "growth": growth_fn,
         "influence": influence_fn,
