@@ -25,6 +25,9 @@ influence:
   cosinus_influence:
     amplitude: 0.1
     elevation: 0.2
+  high_single_influence:
+    motive_focus: [0,1] # "all_pairs" doesnt work here, just do single ones
+    conflict_strength: 0.1
   sub_dom_conflict:
     strength: 0.1
   warm_cold_conflict:

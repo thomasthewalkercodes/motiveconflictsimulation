@@ -28,12 +28,15 @@ influence:
     amplitude: 0.1
     elevation: 0.2
   chosen_influence: sub_dom_conflict # now this one gets added in the combinatorics
-
   sub_dom_conflict:
     strength: 0.1
   warm_cold_conflict:
     strength: 0.1
   custom_interactions: {} #overrides all above if not empty
+  high_single_influence:
+    motive_focus: "all_pairs" # either "all_pairs" to test everything
+  # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
+    conflict_strength: 0.1
 
 # starting_values
 starting_values:
