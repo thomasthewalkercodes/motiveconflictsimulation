@@ -29,6 +29,13 @@ def generate_decay(behavior_ratio, decay):
         decay_rates
     )  # mirrors it because its what gets "invoked" or "invited" from the other
     for i in range(n):
-        mirrored[(n - 1) % n] = decay_rates[i]  # flips on the "warmth" axis
+        mirrored[(n - i) % n] = decay_rates[i]  # flips on the "warmth" axis
     decay_rates = mirrored
     return decay_rates
+
+
+def ratio_decay(satisfaction_levels, active_motive, decay_rates):
+    for i in range(len(satisfaction_levels)):
+        if i != active_motive:
+            satisfaction_levels[i] -= decay_rates[i]
+    return satisfaction_levels
