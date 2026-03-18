@@ -17,3 +17,18 @@ def cos_decay(satisfaction_levels, active_motive, motive_focus, amplitude, eleva
             angle = distance * (2 * np.pi / len(satisfaction_levels))
             satisfaction_levels[i] -= amplitude * np.cos(angle) + elevation
     return satisfaction_levels
+
+
+def generate_decay(behavior_ratio, decay):
+    total_budget = decay.sum()
+    decay_rates = (
+        behavior_ratio / behavior_ratio.sum() * total_budget
+    )  # redistributes the right amount of decay, so all stays in bounds
+    n = len(decay_rates)
+    mirrored = np.zeros_like(
+        decay_rates
+    )  # mirrors it because its what gets "invoked" or "invited" from the other
+    for i in range(n):
+        mirrored[(n - 1) % n] = decay_rates[i]  # flips on the "warmth" axis
+    decay_rates = mirrored
+    return decay_rates
