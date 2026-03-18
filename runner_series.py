@@ -29,7 +29,7 @@ def set_path(d, path, value):
 
 
 _DIR = Path(__file__).resolve().parent / "configuration_files"
-SERIES_CONFIG = _DIR / "uni_bi_series_flat.yaml"  # <- PASS YOUR YAML HERE
+SERIES_CONFIG = _DIR / "uni_bi_series_cos.yaml"  # <- PASS YOUR YAML HERE
 
 series = yaml.safe_load(SERIES_CONFIG.open())
 # this makes the "all_pairs" readable for the axes list finder
