@@ -9,7 +9,7 @@ import numpy as np
 import itertools
 import copy
 from pathlib import Path
-from algorithm.save_results import save_influence_matrix, save_simulation, setup_run
+from algorithm.ip_save_results import save_influence_matrix, save_simulation, setup_run
 from runner_series import find_axes, set_path
 
 _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_files"
@@ -76,12 +76,14 @@ if __name__ == "__main__":
             "steps": config["steps"],
             "active_motive_steps": config["active_motive_steps"],
             "n_motives": n_motives,
+            "decay": config["decay"],
         }
         cfg_b = {
             **config["person_b"],
             "steps": config["steps"],
             "active_motive_steps": config["active_motive_steps"],
             "n_motives": n_motives,
+            "decay": config["decay"],
         }
 
         pipu_a = translator(cfg_a)
