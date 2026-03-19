@@ -59,7 +59,7 @@ person_a:
   growth: 
     chosen_growth: flat_growth #options: all of the below
     flat_growth:
-      growth_rate: 1
+      growth_rate: 2
 
   # activation check
   activation_check:
@@ -96,7 +96,7 @@ person_b:
   growth: 
     chosen_growth: flat_growth #options: all of the below
     flat_growth:
-      growth_rate: 1
+      growth_rate: 2
 
   # activation check
   activation_check:
