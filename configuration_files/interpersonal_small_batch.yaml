@@ -52,8 +52,6 @@ person_a:
     random_starting_values:
       low: 0
       high: 1
-    fixed_sat_matrix: 
-      satisfaction: [0.2, 0.3] 
 
   # Growth rules
   growth: 
@@ -89,8 +87,6 @@ person_b:
     random_starting_values:
       low: 0
       high: 1
-    fixed_sat_matrix: 
-      satisfaction: [0.2, 0.3] #because this is not a scalar, maybe fix in the future?
 
   # Growth rules
   growth: 
