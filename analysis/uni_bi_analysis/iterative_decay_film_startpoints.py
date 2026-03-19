@@ -19,14 +19,15 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[2]
-sys.path.insert(0, str(ROOT))
-
 from algorithm.algorithm import algorithm
 from algorithm.activation_check import linear_check
 from algorithm.growth import flat_growth
 from algorithm.influence import uni_bi_influence
 from algorithm.starting_values import random_starting_values
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
 
 # ── Config ────────────────────────────────────────────────────────────────────
 N_MOTIVES = 8

@@ -2,7 +2,11 @@
 from algorithm.translator import translator
 from algorithm.algorithm import algorithm
 from algorithm.decay import generate_decay, ratio_decay
-import functools, yaml, numpy as np, itertools, copy
+import functools
+import yaml
+import numpy as np
+import itertools
+import copy
 from pathlib import Path
 from algorithm.save_results import save_influence_matrix, save_simulation, setup_run
 from runner_series import find_axes, set_path
@@ -19,10 +23,28 @@ CONFIG = (
 
 yaml_config = yaml.safe_load(CONFIG.open())
 
+# this makes the "all_pairs" readable for the axes list finder
+# and makes series out of it.
+for person in ["person_a", "person_b"]:
+    person_cfg = yaml_config[person]
 
-def get_ratios(history):
+    uni_bi = person_cfg["influence"].get("uni_bi_influence", {})
+    if uni_bi.get("motive_focus") == "all_pairs":
+        if uni_bi.get("unilateral", True):
+            all_pairs = list(itertools.permutations(range(yaml_config["n_motives"]), 2))
+        else:
+            all_pairs = list(itertools.combinations(range(yaml_config["n_motives"]), 2))
+        person_cfg["influence"]["uni_bi_influence"]["motive_focus"] = all_pairs
+
+    if person_cfg["decay"].get("cos_decay", {}).get("motive_focus") == "all_motives":
+        person_cfg["decay"]["cos_decay"]["motive_focus"] = list(
+            range(yaml_config["n_motives"])
+        )
+
+
+def get_ratios(history, n_motives):
     active = [a for a in history["active_motive"] if a is not None]
-    counts = np.zeros(N_MOTIVES)
+    counts = np.zeros(n_motives)
     for a in active:
         counts[a] += 1
     total = counts.sum()
@@ -31,56 +53,57 @@ def get_ratios(history):
 
 
 def make_decay(behavior_ratios, reference_decay):
-    new_rates = generate_decay(behavior_ratios, decay_rates=reference_decay)
-
-    return functools.partial(new_rates)
+    new_rates = generate_decay(behavior_ratios, decay=reference_decay)
+    return functools.partial(ratio_decay, decay_rates=new_rates)
 
 
 if __name__ == "__main__":
-
-    # add some yaml stuff that gets lost in translation for each participant
-    cfg_a = {
-        **yaml_config["person_a"],
-        "steps": yaml_config["steps"],
-        "active_motive_steps": yaml_config["active_motive_steps"],
-        "n_motives": N_MOTIVES,
-    }
-    cfg_b = {
-        **yaml_config["person_b"],
-        "steps": yaml_config["steps"],
-        "active_motive_steps": yaml_config["active_motive_steps"],
-        "n_motives": N_MOTIVES,
-    }
-
-    pipu_a = translator(cfg_a)
-    pipu_b = translator(cfg_b)
-    # intial decay (we could say starting point) of a (since b already takes the behavior of a immediately)
-    decay_a = pipu_a["decay"]
-
     axes = list(find_axes(yaml_config))
     paths = [p for p, _ in axes]
     values = [v for _, v in axes]
 
     for i, combo in enumerate(itertools.product(*values)):
         config = copy.deepcopy(yaml_config)
-        tag_parts = [yaml_config["tag"]]
         for path, value in zip(paths, combo):
             set_path(config, path, value)
-        config["tag"] = f"{yaml_config['tag']}_{i:05d}"
+        config["tag"] = f"{config['tag']}_{i:05d}"
+        n_motives = config["n_motives"]
+        n_dialogue = config["n_dialogue"]
 
         run_dir = setup_run(
             config
         )  # perpares the githash, variables, parameters, tag, folder to save in.
 
-        for sim in range(config["n_simulations"]):
-            history = algorithm(**{**pipu_a, "decay": decay_a})
-            save_simulation(history, sim, run_dir)
-            save_influence_matrix(history, sim, run_dir)
-            ratios_a = get_ratios(history)
-            decay_b = make_decay(ratios_a, pipu_b["decay"])
+        # add some yaml stuff that gets lost in translation for each participant
+        cfg_a = {
+            **config["person_a"],
+            "steps": config["steps"],
+            "active_motive_steps": config["active_motive_steps"],
+            "n_motives": n_mtovies,
+        }
+        cfg_b = {
+            **config["person_b"],
+            "steps": config["steps"],
+            "active_motive_steps": config["active_motive_steps"],
+            "n_motives": n_motives,
+        }
 
-            history = algorithm(**{**pipu_b, "decay": decay_b})
-            save_simulation(history, sim, run_dir)
-            save_influence_matrix(history, sim, run_dir)
-            ratios_b = get_ratios(history)
-            decay_a = make_decay(ratios_b, pipu_a["decay"])
+        pipu_a = translator(cfg_a)
+        pipu_b = translator(cfg_b)
+
+        for sim in range(config["n_simulations"]):
+            # intial decay (we could say starting point) of "a"
+            # (since b already takes the behavior of a immediately)
+            decay_a = pipu_a["decay"]
+            for dia_round in range(n_dialogue):
+                history = algorithm(**{**pipu_a, "decay": decay_a})
+                save_simulation(history, f"a_sim{sim}_round{dia_round}", run_dir)
+                save_influence_matrix(history, f"a_sim{sim}_round{dia_round}", run_dir)
+                ratios_a = get_ratios(history, n_motives)
+                decay_b = make_decay(ratios_a, pipu_b["decay"])
+
+                history = algorithm(**{**pipu_b, "decay": decay_b})
+                save_simulation(history, f"b_sim{sim}_round{dia_round}", run_dir)
+                save_influence_matrix(history, f"b_sim{sim}_round{dia_round}", run_dir)
+                ratios_b = get_ratios(history, n_motives)
+                decay_a = make_decay(ratios_b, pipu_a["decay"])

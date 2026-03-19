@@ -13,10 +13,11 @@ notes: "Explain the change specifically and why we do this in some sentences."
 
 # General settings
 seed: 42
-steps: 10
-n_simulations: [3,10,1000] # simething like this
+steps: 1000000
+n_simulations: [1] # can be made into a list, like most factors here [x,y]
 n_motives: 8
-# should be higher than steps if you dont need it
+n_dialogue: 25 # a dialogue is a->b repeat a->b repeat
+# active_motive_steps should be higher than steps if you dont need it
 # should be x10 or x15 times lower than steps if it should matter
 active_motive_steps: 1000
 
@@ -29,30 +30,24 @@ person_a:
     cosinus_influence:
       amplitude: 0.1
       elevation: 0.2
-    chosen_influence: sub_dom_conflict # now this one gets added in the combinatorics
-    sub_dom_conflict:
-      strength: 0.1
-    warm_cold_conflict:
-      strength: 0.1
-    custom_interactions: {} #overrides all above if not empty
     uni_bi_influence:
       motive_focus: "all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-      conflict_strength: 0.1
-      unilateral: True #True if non-mirrored, else false
+      conflict_strength: -0.15 #should be negative for conflict
+      unilateral: True #True if non-mirrored, else false (can be also made into a list [True, False])
 
   # starting_values
   starting_values:
     chosen_starting_values: random_starting_values #options: all of the below
     random_starting_values:
-      low: -1
+      low: 0
       high: 1
     fixed_sat_matrix: 
-      satisfaction: [[0.2], 0.3] #because this is not a scalar, maybe fix in the future?
+      satisfaction: [0.2, 0.3] 
 
   # Decay
   decay:
-    chosen_decay: flat_decay #options: all of the below
+    chosen_decay: cos_decay #options: all of the below
     cos_decay:
       motive_focus: "all_motives" # or just a number
       amplitude: 0.05
@@ -82,26 +77,20 @@ person_b:
     cosinus_influence:
       amplitude: 0.1
       elevation: 0.2
-    chosen_influence: sub_dom_conflict # now this one gets added in the combinatorics
-    sub_dom_conflict:
-      strength: 0.1
-    warm_cold_conflict:
-      strength: 0.1
-    custom_interactions: {} #overrides all above if not empty
     uni_bi_influence:
       motive_focus: "all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-      conflict_strength: 0.1
+      conflict_strength: -0.15
       unilateral: True #True if non-mirrored, else false
 
   # starting_values
   starting_values:
     chosen_starting_values: random_starting_values #options: all of the below
     random_starting_values:
-      low: -1
+      low: 0
       high: 1
     fixed_sat_matrix: 
-      satisfaction: [[0.2], 0.3] #because this is not a scalar, maybe fix in the future?
+      satisfaction: [0.2, 0.3] #because this is not a scalar, maybe fix in the future?
 
   # Decay
   decay:

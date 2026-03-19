@@ -5,7 +5,8 @@ from pathlib import Path
 
 # ── Config ────────────────────────────────────────────────────────────────────
 RUN_DIR = Path(
-    r"C:\Users\thoma\OneDrive\Dokumente\Interpersonal stuffies\github_motiveconflict\motiveconflictsimulation\runs\uni_bi_series_flat_00000_2026-03-17_18-09-20"
+    r"C:\Users\thoma\OneDrive\Dokumente\Interpersonal stuffies\github_motiveconflict"
+    r"\motiveconflictsimulation\runs\uni_bi_series_flat_00000_2026-03-17_18-09-20"
 )
 SIM_FILE = RUN_DIR / "simulation_0.csv"
 # ─────────────────────────────────────────────────────────────────────────────
