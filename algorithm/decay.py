@@ -19,8 +19,7 @@ def cos_decay(satisfaction_levels, active_motive, motive_focus, amplitude, eleva
     return satisfaction_levels
 
 
-def generate_decay(behavior_ratio, decay):
-    total_budget = decay.sum()
+def generate_decay(behavior_ratio, total_budget):
     decay_rates = (
         behavior_ratio / behavior_ratio.sum() * total_budget
     )  # redistributes the right amount of decay, so all stays in bounds

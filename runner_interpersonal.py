@@ -2,6 +2,7 @@
 from algorithm.translator import translator
 from algorithm.algorithm import algorithm
 from algorithm.decay import generate_decay, ratio_decay
+import algorithm.decay as decay_module
 import functools
 import yaml
 import numpy as np
@@ -36,10 +37,10 @@ for person in ["person_a", "person_b"]:
             all_pairs = list(itertools.combinations(range(yaml_config["n_motives"]), 2))
         person_cfg["influence"]["uni_bi_influence"]["motive_focus"] = all_pairs
 
-    if person_cfg["decay"].get("cos_decay", {}).get("motive_focus") == "all_motives":
-        person_cfg["decay"]["cos_decay"]["motive_focus"] = list(
-            range(yaml_config["n_motives"])
-        )
+if yaml_config["decay"].get("cos_decay", {}).get("motive_focus") == "all_motives":
+    yaml_config["decay"]["cos_decay"]["motive_focus"] = list(
+        range(yaml_config["n_motives"])
+    )
 
 
 def get_ratios(history, n_motives):
@@ -50,11 +51,6 @@ def get_ratios(history, n_motives):
     total = counts.sum()
     behavior_ratios = counts / total
     return behavior_ratios
-
-
-def make_decay(behavior_ratios, reference_decay):
-    new_rates = generate_decay(behavior_ratios, decay=reference_decay)
-    return functools.partial(ratio_decay, decay_rates=new_rates)
 
 
 if __name__ == "__main__":
@@ -90,20 +86,29 @@ if __name__ == "__main__":
 
         pipu_a = translator(cfg_a)
         pipu_b = translator(cfg_b)
+        # intial decay (we could say starting point) of "a"
+        # (since b already takes the behavior of a immediately)
+        decay_a = functools.partial(
+            getattr(decay_module, config["decay"]["chosen_decay"]),
+            **config["decay"][config["decay"]["chosen_decay"]],
+        )
 
         for sim in range(config["n_simulations"]):
-            # intial decay (we could say starting point) of "a"
-            # (since b already takes the behavior of a immediately)
-            decay_a = pipu_a["decay"]
             for dia_round in range(n_dialogue):
                 history = algorithm(**{**pipu_a, "decay": decay_a})
                 save_simulation(history, f"a_sim{sim}_round{dia_round}", run_dir)
                 save_influence_matrix(history, f"a_sim{sim}_round{dia_round}", run_dir)
                 ratios_a = get_ratios(history, n_motives)
-                decay_b = make_decay(ratios_a, pipu_b["decay"])
+                decay_b = functools.partial(
+                    ratio_decay,
+                    decay_rates=generate_decay(ratios_a, config["total_budget"]),
+                )
 
                 history = algorithm(**{**pipu_b, "decay": decay_b})
                 save_simulation(history, f"b_sim{sim}_round{dia_round}", run_dir)
                 save_influence_matrix(history, f"b_sim{sim}_round{dia_round}", run_dir)
                 ratios_b = get_ratios(history, n_motives)
-                decay_a = make_decay(ratios_b, pipu_a["decay"])
+                decay_a = functools.partial(
+                    ratio_decay,
+                    decay_rates=generate_decay(ratios_b, config["total_budget"]),
+                )

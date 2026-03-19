@@ -20,6 +20,16 @@ n_dialogue: 25 # a dialogue is a->b repeat a->b repeat
 # active_motive_steps should be higher than steps if you dont need it
 # should be x10 or x15 times lower than steps if it should matter
 active_motive_steps: 1000
+decay: #all motives or a list [0, 2,4] for combinatorics
+    chosen_decay: cos_decay #options: all of the below
+    cos_decay:
+      motive_focus: "all_motives" # or just a number
+      amplitude: 0.05
+      elevation: 0.06
+    flat_decay:
+      decay_rate: 0.02
+#budget for later rounds.
+total_budget: 0.5
 
 
 #BEWARE here are two agents to config!
@@ -44,16 +54,6 @@ person_a:
       high: 1
     fixed_sat_matrix: 
       satisfaction: [0.2, 0.3] 
-
-  # Decay
-  decay:
-    chosen_decay: cos_decay #options: all of the below
-    cos_decay:
-      motive_focus: "all_motives" # or just a number
-      amplitude: 0.05
-      elevation: 0.06
-    flat_decay:
-      decay_rate: 0.02
 
   # Growth rules
   growth: 
@@ -91,16 +91,6 @@ person_b:
       high: 1
     fixed_sat_matrix: 
       satisfaction: [0.2, 0.3] #because this is not a scalar, maybe fix in the future?
-
-  # Decay
-  decay:
-    chosen_decay: flat_decay #options: all of the below
-    cos_decay:
-      motive_focus: "all_motives" # or just a number
-      amplitude: 0.05
-      elevation: 0.06
-    flat_decay:
-      decay_rate: 0.02
 
   # Growth rules
   growth: 
