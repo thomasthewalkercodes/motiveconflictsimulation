@@ -8,8 +8,8 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "Naming the most important change or what is being looked at" #make sure to use _ instead of space
-notes: "Explain the change specifically and why we do this in some sentences."
+tag: "ip_smallbatch" #make sure to use _ instead of space
+notes: "test run to make it happen"
 
 # General settings
 seed: 42
@@ -26,12 +26,12 @@ active_motive_steps: 1000
 person_a: 
   # Influence
   influence:
-    chosen_influence: cosinus_influence #options: all of the below
+    chosen_influence: uni_bi_influence #options: all of the below
     cosinus_influence:
       amplitude: 0.1
       elevation: 0.2
     uni_bi_influence:
-      motive_focus: "all_pairs" # either "all_pairs" to test everything
+      motive_focus: [[0,2]] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
       conflict_strength: -0.15 #should be negative for conflict
       unilateral: True #True if non-mirrored, else false (can be also made into a list [True, False])
@@ -73,12 +73,12 @@ person_a:
 person_b: 
   # Influence
   influence:
-    chosen_influence: cosinus_influence #options: all of the below
+    chosen_influence: uni_bi_influence #options: all of the below
     cosinus_influence:
       amplitude: 0.1
       elevation: 0.2
     uni_bi_influence:
-      motive_focus: "all_pairs" # either "all_pairs" to test everything
+      motive_focus: [[0,4]] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
       conflict_strength: -0.15
       unilateral: True #True if non-mirrored, else false
@@ -96,7 +96,7 @@ person_b:
   decay:
     chosen_decay: flat_decay #options: all of the below
     cos_decay:
-      motive_focus: 0 #"all_motives" # or just a number set to a number. never a list
+      motive_focus: "all_motives" # or just a number
       amplitude: 0.05
       elevation: 0.06
     flat_decay:

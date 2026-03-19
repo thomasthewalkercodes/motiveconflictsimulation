@@ -16,7 +16,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "your_file.yaml"
+    _CONFIGURATION_DIRECTION / "interpersonal_small_batch.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
@@ -79,7 +79,7 @@ if __name__ == "__main__":
             **config["person_a"],
             "steps": config["steps"],
             "active_motive_steps": config["active_motive_steps"],
-            "n_motives": n_mtovies,
+            "n_motives": n_motives,
         }
         cfg_b = {
             **config["person_b"],
