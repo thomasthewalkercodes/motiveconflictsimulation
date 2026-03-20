@@ -17,7 +17,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "interpersonal_small_batch.yaml"
+    _CONFIGURATION_DIRECTION / "interpersonal_bigbatch.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
@@ -96,7 +96,7 @@ if __name__ == "__main__":
         )
 
         for sim in range(config["n_simulations"]):
-            if sim == 0
+            if sim == 0:
                 save_influence_matrix(history, f"a_sim{sim}_", run_dir)
                 save_influence_matrix(history, f"b_sim{sim}_", run_dir)
             for dia_round in range(n_dialogue):

@@ -8,8 +8,8 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "ip_smallbatch" #make sure to use _ instead of space
-notes: "redid this one so origianl note is in the results"
+tag: "ip_bigbatch" #make sure to use _ instead of space
+notes: "more structured iterarions with different and varying combinations."
 
 # General settings
 seed: 42
@@ -29,7 +29,7 @@ decay: #all motives or a list [0, 2,4] for combinatorics
     flat_decay:
       decay_rate: 0.02
 #budget for later rounds.
-total_budget: 0.5
+total_budget: 0.4
 
 
 #BEWARE here are two agents to config!

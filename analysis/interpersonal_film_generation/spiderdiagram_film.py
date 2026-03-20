@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from pathlib import Path
+import yaml
 
 #########################
 #########################
@@ -13,6 +14,27 @@ RUN_PREFIX = "ip_smallbatch"
 RUNS_DIR = Path(__file__).resolve().parents[2] / "runs"
 OUT_DIR = Path(__file__).resolve().parent / "films"
 OUT_DIR.mkdir(exist_ok=True)
+
+
+def load_influence_info(run_dir, person):
+    yaml_files = list(run_dir.glob("*.yaml"))
+    if not yaml_files:
+        return {}
+    cfg = yaml.safe_load(yaml_files[0].read_text())
+    person_key = f"person_{person}"
+    inf = cfg.get(person_key, {}).get("influence", {})
+    chosen = inf.get("chosen_influence", "")
+    params = inf.get(chosen, {})
+    unilateral = params.get("unilateral", "?")
+    uni_label = "unilateral" if unilateral else "bilateral"
+    motive_focus = params.get("motive_focus", "?")
+    conflict_strength = params.get("conflict_strength", "?")
+    return {
+        "chosen": chosen,
+        "uni_label": uni_label,
+        "motive_focus": motive_focus,
+        "conflict_strength": conflict_strength,
+    }
 
 
 def get_behavior_ratios(run_dir, person, sim, n_motives):
@@ -49,8 +71,11 @@ def draw_spider(ax, ratios, angles, max_ratio, n_motives, title, round_idx):
                 f"{ratio:.1%}",
                 xy=(angle, ratio),
                 xytext=(angle, ratio + max_ratio * 0.12),
-                ha="center", va="center",
-                fontsize=6, color="steelblue", fontweight="bold",
+                ha="center",
+                va="center",
+                fontsize=6,
+                color="steelblue",
+                fontweight="bold",
             )
     ax.set_title(f"{title}\nround {round_idx}", fontsize=8, pad=6)
 
@@ -63,16 +88,42 @@ def make_film(run_dir, sim, n_motives):
         print(f"  No data for sim{sim} in {run_dir.name}, skipping.")
         return
 
+    info_a = load_influence_info(run_dir, "a")
+    info_b = load_influence_info(run_dir, "b")
+
+    def subtitle(info):
+        return (
+            f"{info.get('uni_label','')}  |  "
+            f"focus: {info.get('motive_focus','')}  |  "
+            f"strength: {info.get('conflict_strength','')}"
+        )
+
     max_ratio = max(ratios_a.max(), ratios_b.max())
     angles = np.linspace(0, 2 * np.pi, n_motives, endpoint=False).tolist()
     angles += angles[:1]
 
-    fig, (ax_a, ax_b) = plt.subplots(1, 2, subplot_kw={"polar": True}, figsize=(10, 5))
+    fig, (ax_a, ax_b) = plt.subplots(1, 2, subplot_kw={"polar": True}, figsize=(12, 5))
     fig.suptitle(run_dir.name, fontsize=9)
 
     def draw(i):
-        draw_spider(ax_a, ratios_a[i], angles, max_ratio, n_motives, "Person A", i)
-        draw_spider(ax_b, ratios_b[i], angles, max_ratio, n_motives, "Person B", i)
+        draw_spider(
+            ax_a,
+            ratios_a[i],
+            angles,
+            max_ratio,
+            n_motives,
+            f"Person A — {subtitle(info_a)}",
+            i,
+        )
+        draw_spider(
+            ax_b,
+            ratios_b[i],
+            angles,
+            max_ratio,
+            n_motives,
+            f"Person B — {subtitle(info_b)}",
+            i,
+        )
 
     ani = animation.FuncAnimation(fig, draw, frames=n_rounds, interval=200, repeat=True)
     out_file = OUT_DIR / f"{run_dir.name}_sim{sim}.gif"
@@ -95,10 +146,12 @@ if __name__ == "__main__":
             continue
         df = pd.read_csv(sample)
         n_motives = len([c for c in df.columns if c.startswith("motive_")])
-        sims = sorted({
-            int(p.stem.split("_sim")[1].split("_")[0])
-            for p in run_dir.glob("simulation_a_sim*_round0.csv")
-        })
+        sims = sorted(
+            {
+                int(p.stem.split("_sim")[1].split("_")[0])
+                for p in run_dir.glob("simulation_a_sim*_round0.csv")
+            }
+        )
         print(f"  {run_dir.name} — motives: {n_motives}, sims: {sims}")
         for sim in sims:
             make_film(run_dir, sim, n_motives)
