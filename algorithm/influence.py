@@ -20,11 +20,7 @@ def cosinus_influence(satisfaction_levels, amplitude, elevation):
 
     matrix = (matrix + matrix.T) / 2
     matrix = np.round(matrix, 3)
-    return pd.DataFrame(
-        matrix,
-        columns=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
-        index=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
-    )
+    return matrix
 
 
 def uni_bi_influence(
@@ -35,11 +31,7 @@ def uni_bi_influence(
     if not unilateral:
         matrix[motive_focus[1], motive_focus[0]] = conflict_strength
 
-    return pd.DataFrame(
-        matrix,
-        columns=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
-        index=[f"motive_{i+1}" for i in range(len(satisfaction_levels))],
-    )
+    return matrix
 
 
 def custom_influence(satisfaction_levels, custom_values):
