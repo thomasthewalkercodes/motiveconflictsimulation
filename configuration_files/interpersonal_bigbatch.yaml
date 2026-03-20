@@ -13,7 +13,7 @@ notes: "more structured iterarions with different and varying combinations."
 
 # General settings
 seed: 42
-steps: 1000000
+steps: 10000
 n_simulations: [1] # can be made into a list, like most factors here [x,y]
 n_motives: 8
 n_dialogue: 25 # a dialogue is a->b repeat a->b repeat
@@ -29,7 +29,7 @@ decay: #all motives or a list [0, 2,4] for combinatorics
     flat_decay:
       decay_rate: 0.02
 #budget for later rounds.
-total_budget: 0.4
+total_budget: 0.5
 
 
 #BEWARE here are two agents to config!
