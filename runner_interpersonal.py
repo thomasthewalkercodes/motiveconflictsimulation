@@ -96,13 +96,11 @@ if __name__ == "__main__":
         )
 
         for sim in range(config["n_simulations"]):
-            if sim == 0:
-                save_influence_matrix(history, f"a_sim{sim}_", run_dir)
-                save_influence_matrix(history, f"b_sim{sim}_", run_dir)
             for dia_round in range(n_dialogue):
                 history = algorithm(**{**pipu_a, "decay": decay_a})
                 save_simulation(history, f"a_sim{sim}_round{dia_round}", run_dir)
-
+                if sim == 0 and dia_round == 0:
+                    save_influence_matrix(history, "a", run_dir)
                 ratios_a = get_ratios(history, n_motives)
                 decay_b = functools.partial(
                     ratio_decay,
@@ -111,6 +109,8 @@ if __name__ == "__main__":
 
                 history = algorithm(**{**pipu_b, "decay": decay_b})
                 save_simulation(history, f"b_sim{sim}_round{dia_round}", run_dir)
+                if sim == 0 and dia_round == 0:
+                    save_influence_matrix(history, "b", run_dir)
                 ratios_b = get_ratios(history, n_motives)
                 decay_a = functools.partial(
                     ratio_decay,
