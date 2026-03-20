@@ -1,6 +1,6 @@
 # This is my program runner for the interpersonal addition
 from algorithm.translator import translator
-from algorithm.algorithm import algorithm
+from algorithm.ip_algorithm import algorithm
 from algorithm.decay import generate_decay, ratio_decay
 import algorithm.decay as decay_module
 import functools
@@ -44,7 +44,7 @@ if yaml_config["decay"].get("cos_decay", {}).get("motive_focus") == "all_motives
 
 
 def get_ratios(history, n_motives):
-    active = [a for a in history["active_motive"] if a is not None]
+    active = [a for a in history["active_motive"]]
     counts = np.zeros(n_motives)
     for a in active:
         counts[a] += 1

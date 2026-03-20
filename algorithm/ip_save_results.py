@@ -83,12 +83,11 @@ def save_simulation(history, sim, run_dir):
 
 
 def save_influence_matrix(history, sim, run_dir):
+    n = len(history["influence_matrix"])
     df = pd.DataFrame(
         history["influence_matrix"],
-        columns=[
-            f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))
-        ],
-        index=[f"motive_{i+1}" for i in range(len(history["satisfaction levels"][0]))],
+        columns=[f"motive_{i+1}" for i in range(n)],
+        index=[f"motive_{i+1}" for i in range(n)],
     )
     df.to_csv(
         run_dir / "influence_matrices" / f"influence_matrix_{sim}.csv", index=True
