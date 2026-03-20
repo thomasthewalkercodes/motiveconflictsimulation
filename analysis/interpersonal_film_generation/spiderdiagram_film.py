@@ -140,12 +140,11 @@ if __name__ == "__main__":
         print(f"Found {len(run_dirs)} run(s) matching '{RUN_PREFIX}'")
 
     for run_dir in run_dirs:
-        sample = next(run_dir.glob("simulation_a_sim0_round0.csv"), None)
-        if sample is None:
+        if not any(run_dir.glob("simulation_a_sim0_round0.csv")):
             print(f"  Skipping {run_dir.name} (no simulation files found)")
             continue
-        df = pd.read_csv(sample)
-        n_motives = len([c for c in df.columns if c.startswith("motive_")])
+        yaml_files = list(run_dir.glob("*.yaml"))
+        n_motives = yaml.safe_load(yaml_files[0].read_text())["n_motives"]
         sims = sorted(
             {
                 int(p.stem.split("_sim")[1].split("_")[0])
