@@ -23,9 +23,9 @@ active_motive_steps: 500
 decay: #all motives or a list [0, 2,4] for combinatorics
     chosen_decay: cos_decay #options: all of the below
     cos_decay:
-      motive_focus: "all_motives" # or just a number
-      amplitude: 0.05
-      elevation: 0.06
+      motive_focus: 0 # or just a number
+      amplitude: 0.025
+      elevation: 0.05
     flat_decay:
       decay_rate: 0.02
 #budget for later rounds.

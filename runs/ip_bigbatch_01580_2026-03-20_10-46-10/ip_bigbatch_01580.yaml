@@ -1,0 +1,67 @@
+active_motive_steps: 500
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0.05
+    elevation: 0.06
+    motive_focus: 1
+  flat_decay:
+    decay_rate: 0.02
+n_dialogue: 25
+n_motives: 8
+n_simulations: 1
+notes: more structured iterarions with different and varying combinations.
+person_a:
+  activation_check:
+    chosen_activation_check: linear_check
+    linear_check: {}
+  growth:
+    chosen_growth: flat_growth
+    flat_growth:
+      growth_rate: 2
+  influence:
+    chosen_influence: uni_bi_influence
+    cosinus_influence:
+      amplitude: 0.1
+      elevation: 0.2
+    uni_bi_influence:
+      conflict_strength: -0.15
+      motive_focus: !!python/tuple
+      - 1
+      - 3
+      unilateral: false
+  starting_values:
+    chosen_starting_values: random_starting_values
+    random_starting_values:
+      high: 1
+      low: 0
+person_b:
+  activation_check:
+    chosen_activation_check: linear_check
+    linear_check: {}
+  growth:
+    chosen_growth: flat_growth
+    flat_growth:
+      growth_rate: 2
+  influence:
+    chosen_influence: uni_bi_influence
+    cosinus_influence:
+      amplitude: 0.1
+      elevation: 0.2
+    uni_bi_influence:
+      conflict_strength: 0
+      motive_focus:
+      - 0
+      - 4
+      unilateral: true
+  starting_values:
+    chosen_starting_values: random_starting_values
+    random_starting_values:
+      high: 1
+      low: 0
+seed: 42
+steps: 5000
+tag: ip_bigbatch_01580
+total_budget: 0.5
+
+git_commit: 92749c893

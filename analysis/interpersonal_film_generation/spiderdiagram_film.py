@@ -7,7 +7,7 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = "ip_smallbatch"
+RUN_PREFIX = "ip_bigbatch"
 #########################
 #########################
 
@@ -20,7 +20,7 @@ def load_influence_info(run_dir, person):
     yaml_files = list(run_dir.glob("*.yaml"))
     if not yaml_files:
         return {}
-    cfg = yaml.safe_load(yaml_files[0].read_text())
+    cfg = yaml.full_load(yaml_files[0].read_text())
     person_key = f"person_{person}"
     inf = cfg.get(person_key, {}).get("influence", {})
     chosen = inf.get("chosen_influence", "")
@@ -78,6 +78,123 @@ def draw_spider(ax, ratios, angles, max_ratio, n_motives, title, round_idx):
                 fontweight="bold",
             )
     ax.set_title(f"{title}\nround {round_idx}", fontsize=8, pad=6)
+
+
+def load_run_config(run_dir):
+    yaml_files = list(run_dir.glob("*.yaml"))
+    if not yaml_files:
+        return {}
+    return yaml.full_load(yaml_files[0].read_text())
+
+
+def group_key(cfg):
+    """Hashable key of all params except decay.cos_decay.motive_focus."""
+    decay = cfg.get("decay", {})
+    cos = decay.get("cos_decay", {})
+    pa = cfg.get("person_a", {}).get("influence", {})
+    pb = cfg.get("person_b", {}).get("influence", {})
+    chosen_a = pa.get("chosen_influence", "")
+    params_a = pa.get(chosen_a, {})
+    chosen_b = pb.get("chosen_influence", "")
+    params_b = pb.get(chosen_b, {})
+    return (
+        decay.get("chosen_decay"),
+        cos.get("amplitude"),
+        cos.get("elevation"),
+        chosen_a,
+        str(params_a.get("motive_focus")),
+        params_a.get("conflict_strength"),
+        params_a.get("unilateral"),
+        chosen_b,
+        str(params_b.get("motive_focus")),
+        params_b.get("conflict_strength"),
+        params_b.get("unilateral"),
+    )
+
+
+def make_grouped_film(group_runs, sim, n_motives):
+    """group_runs: list of (run_dir, motive_focus_label) sorted by motive_focus."""
+    n = len(group_runs)
+    ncols = 2  # person A | person B per run
+    nrows = n
+    all_ratios_a, all_ratios_b, all_labels = [], [], []
+    for run_dir, focus_label in group_runs:
+        ra = get_behavior_ratios(run_dir, "a", sim, n_motives)
+        rb = get_behavior_ratios(run_dir, "b", sim, n_motives)
+        all_ratios_a.append(ra)
+        all_ratios_b.append(rb)
+        all_labels.append(focus_label)
+
+    n_rounds = min(
+        min(len(r) for r in all_ratios_a),
+        min(len(r) for r in all_ratios_b),
+    )
+    if n_rounds == 0:
+        print(f"  No data for grouped sim{sim}, skipping.")
+        return
+
+    max_ratio = max(
+        max(r.max() for r in all_ratios_a),
+        max(r.max() for r in all_ratios_b),
+    )
+    angles = np.linspace(0, 2 * np.pi, n_motives, endpoint=False).tolist()
+    angles += angles[:1]
+
+    cfg = load_run_config(group_runs[0][0])
+    pa = cfg.get("person_a", {}).get("influence", {})
+    chosen_a = pa.get("chosen_influence", "")
+    params_a = pa.get(chosen_a, {})
+    uni_a = "unilateral" if params_a.get("unilateral") else "bilateral"
+    cs_a = params_a.get("conflict_strength", "?")
+    pb = cfg.get("person_b", {}).get("influence", {})
+    chosen_b = pb.get("chosen_influence", "")
+    params_b = pb.get(chosen_b, {})
+    uni_b = "unilateral" if params_b.get("unilateral") else "bilateral"
+    cs_b = params_b.get("conflict_strength", "?")
+
+    fig, axes = plt.subplots(
+        nrows,
+        ncols,
+        subplot_kw={"polar": True},
+        figsize=(10, 3.5 * nrows),
+    )
+    if nrows == 1:
+        axes = [axes]
+    fig.suptitle(
+        f"A: {uni_a} | strength {cs_a}    B: {uni_b} | strength {cs_b}",
+        fontsize=9,
+    )
+
+    def draw(i):
+        for row, (ra, rb, label) in enumerate(
+            zip(all_ratios_a, all_ratios_b, all_labels)
+        ):
+            draw_spider(
+                axes[row][0],
+                ra[i],
+                angles,
+                max_ratio,
+                n_motives,
+                f"A  focus={label}",
+                i,
+            )
+            draw_spider(
+                axes[row][1],
+                rb[i],
+                angles,
+                max_ratio,
+                n_motives,
+                f"B  focus={label}",
+                i,
+            )
+
+    ani = animation.FuncAnimation(fig, draw, frames=n_rounds, interval=200, repeat=True)
+    # name the file after the first run dir (strip timestamp) + sim
+    base = group_runs[0][0].name.rsplit("_", 2)[0]
+    out_file = OUT_DIR / f"{base}_grouped_sim{sim}.gif"
+    ani.save(out_file, writer="pillow", fps=5)
+    plt.close(fig)
+    print(f"  Saved grouped: {out_file.name}")
 
 
 def make_film(run_dir, sim, n_motives):
@@ -144,7 +261,7 @@ if __name__ == "__main__":
             print(f"  Skipping {run_dir.name} (no simulation files found)")
             continue
         yaml_files = list(run_dir.glob("*.yaml"))
-        n_motives = yaml.safe_load(yaml_files[0].read_text())["n_motives"]
+        n_motives = yaml.full_load(yaml_files[0].read_text())["n_motives"]
         sims = sorted(
             {
                 int(p.stem.split("_sim")[1].split("_")[0])
@@ -154,5 +271,38 @@ if __name__ == "__main__":
         print(f"  {run_dir.name} — motives: {n_motives}, sims: {sims}")
         for sim in sims:
             make_film(run_dir, sim, n_motives)
+
+    # --- grouped GIFs: group by all params except cos_decay.motive_focus ---
+    from collections import defaultdict
+
+    groups = defaultdict(
+        list
+    )  # key -> list of (run_dir, motive_focus_label, n_motives)
+    for run_dir in sorted(RUNS_DIR.glob(f"{RUN_PREFIX}*")):
+        yaml_files = list(run_dir.glob("*.yaml"))
+        if not yaml_files:
+            continue
+        cfg = yaml.full_load(yaml_files[0].read_text())
+        focus = cfg.get("decay", {}).get("cos_decay", {}).get("motive_focus", "?")
+        key = group_key(cfg)
+        nm = cfg.get("n_motives", 8)
+        groups[key].append((run_dir, str(focus), nm))
+
+    for key, members in groups.items():
+        if len(members) < 2:
+            continue  # nothing to group
+        nm = members[0][2]
+        members_sorted = sorted(members, key=lambda x: x[1])
+        # find all sims from first run
+        first_dir = members_sorted[0][0]
+        sims = sorted(
+            {
+                int(p.stem.split("_sim")[1].split("_")[0])
+                for p in first_dir.glob("simulation_a_sim*_round0.csv")
+            }
+        )
+        print(f"  Grouped film: {len(members_sorted)} runs, sims: {sims}")
+        for sim in sims:
+            make_grouped_film([(d, f) for d, f, _ in members_sorted], sim, nm)
 
     print("Done.")
