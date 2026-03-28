@@ -23,7 +23,7 @@ active_motive_steps: 500
 decay: #all motives or a list [0, 2,4] for combinatorics
     chosen_decay: cos_decay #options: all of the below
     cos_decay:
-      motive_focus: [0,2,4,6] # or just a number
+      motive_focus: "all_motives" # or just a number
       amplitude: 0.025
       elevation: 0.05
     flat_decay:
@@ -76,7 +76,7 @@ person_b:
       amplitude: 0.1
       elevation: 0.2
     uni_bi_influence:
-      motive_focus: [0,4] #"all_pairs" # either "all_pairs" to test everything
+      motive_focus: [[0,4]] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
       conflict_strength: [0,-0.15]
       unilateral: [True, False] #True if non-mirrored, else false
