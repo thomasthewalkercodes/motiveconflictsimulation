@@ -17,7 +17,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "interpersonal_bigbatch.yaml"
+    _CONFIGURATION_DIRECTION / "ip_bilateral_static_other.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
