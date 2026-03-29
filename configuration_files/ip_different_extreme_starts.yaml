@@ -41,10 +41,10 @@ person_a:
       amplitude: 0.1
       elevation: 0.2
     uni_bi_influence:
-      motive_focus: "all_pairs" #"all_pairs" # either "all_pairs" to test everything
+      motive_focus: [2,7] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-      conflict_strength: -0.15 #should be negative for conflict
-      unilateral: False #True if non-mirrored, else false (can be also made into a list [True, False])
+      conflict_strength: [[0], [-0.15]] #should be negative for conflict
+      unilateral: True #True if non-mirrored, else false (can be also made into a list [True, False])
 
   # starting_values
   starting_values:
@@ -76,10 +76,10 @@ person_b:
       amplitude: 0.1
       elevation: 0.2
     uni_bi_influence:
-      motive_focus: [[0,4]] #"all_pairs" # either "all_pairs" to test everything
+      motive_focus: [[1,3]] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-      conflict_strength: [0,-0.15]
-      unilateral: [True, False] #True if non-mirrored, else false
+      conflict_strength: [[0], [-0.15]]
+      unilateral: True #True if non-mirrored, else false
 
   # starting_values
   starting_values:

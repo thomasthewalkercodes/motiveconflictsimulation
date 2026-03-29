@@ -8,8 +8,8 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "ip_different_extreme_starts" #make sure to use _ instead of space
-notes: "taking one combination and making different extreme starting points"
+tag: "mehmet" #make sure to use _ instead of space
+notes: "Simulating different scenarios with mehments assumed settings, taking it from chris' book as inspiration"
 
 # General settings
 seed: 42
