@@ -34,6 +34,11 @@ def uni_bi_influence(
     return matrix
 
 
-def custom_influence(satisfaction_levels, custom_values):
+def custom_influence(satisfaction_levels, conflicts):
     matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
-    matrix
+    for conflict in conflicts:
+        i, j = conflict["pair"]
+        matrix[i, j] = conflict["strength"]
+        if not conflict.get("unilateral", True):
+            matrix[j, i] = conflict["strength"]
+    return matrix
