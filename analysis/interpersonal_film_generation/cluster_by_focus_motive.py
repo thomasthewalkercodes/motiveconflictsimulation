@@ -25,7 +25,7 @@ from PIL import Image, ImageDraw, ImageFont
 #########################
 #########################
 RUN_PREFIX = "ip_bilateral_static_other"  # <- same prefix as spiderdiagram_film.py
-SIM = 0                                   # which simulation index to cluster
+SIM = 0  # which simulation index to cluster
 #########################
 #########################
 
@@ -33,12 +33,13 @@ RUNS_DIR = Path(__file__).resolve().parents[2] / "runs"
 FILMS_DIR = Path(__file__).resolve().parent / "films"
 OUT_DIR = FILMS_DIR  # cluster gifs go into the same films/ folder
 
-LABEL_WIDTH = 80   # pixels reserved on the left for a focus-motive label strip
+LABEL_WIDTH = 80  # pixels reserved on the left for a focus-motive label strip
 LABEL_BG = (245, 245, 245)
 LABEL_FG = (40, 40, 40)
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
+
 
 def load_cfg(run_dir: Path) -> dict:
     yaml_files = list(run_dir.glob("*.yaml"))
@@ -104,7 +105,9 @@ def make_label_strip(height: int, text: str) -> Image.Image:
     return strip
 
 
-def stack_frames(rows_frames: list[list[Image.Image]], focus_labels: list[str]) -> list[Image.Image]:
+def stack_frames(
+    rows_frames: list[list[Image.Image]], focus_labels: list[str]
+) -> list[Image.Image]:
     """
     rows_frames : list of n_rows lists, each containing n_frames PIL Images
     focus_labels: list of n_rows label strings
@@ -146,6 +149,7 @@ def save_gif(frames: list[Image.Image], out_path: Path, fps: int = 5) -> None:
 
 
 # ── main ─────────────────────────────────────────────────────────────────────
+
 
 def main():
     run_dirs = sorted(RUNS_DIR.glob(f"{RUN_PREFIX}*"))
