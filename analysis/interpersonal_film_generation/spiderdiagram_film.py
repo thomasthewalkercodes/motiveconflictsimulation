@@ -7,7 +7,7 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = "ip_bilateral_static_other"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+RUN_PREFIX = "ip_different_extreme_starts"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
 #########################
 #########################
 
