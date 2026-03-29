@@ -7,7 +7,7 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = "mehmet_cycle"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+RUN_PREFIX = "mehmet_no_cycle"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
 #########################
 #########################
 
