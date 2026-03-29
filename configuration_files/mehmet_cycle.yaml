@@ -23,7 +23,7 @@ active_motive_steps: 500
 decay: #all motives or a list [0, 2,4] for combinatorics
     chosen_decay: cos_decay #options: all of the below
     cos_decay:
-      motive_focus: 0 # "all motives" or just a number
+      motive_focus: "all_motives" # "all motives" or just a number
       amplitude: 0.025
       elevation: 0.05
     flat_decay:
@@ -42,7 +42,7 @@ person_a:
         - pair: [1, 7]
           strength: -0.15
           unilateral: True
-        - pair: [5, 2]
+        - pair: [5, 7]
           strength: -0.15
           unilateral: True
 
