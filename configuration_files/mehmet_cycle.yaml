@@ -8,8 +8,8 @@
 # the "chosen_influence: xxx" to get it in the combinatorics
 # ──────────────────────────────────────────────────────────────
 
-tag: "mehmet_no_cycle" #make sure to use _ instead of space
-notes: "Simulating different scenarios with mehmets assumed settings, taking it from chris' book as inspiration"
+tag: "mehmet_cycle" #make sure to use _ instead of space
+notes: "New double motive conflict implementation"
 
 # General settings
 seed: 42

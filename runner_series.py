@@ -15,7 +15,7 @@ def find_axes(d, path=()):
     for k, v in d.items():
         if isinstance(v, dict):
             yield from find_axes(v, path + (k,))
-        elif isinstance(v, list):
+        elif isinstance(v, list) and not (v and isinstance(v[0], dict)):
             yield path + (k,), v
 
 
