@@ -39,7 +39,7 @@ person_a:
     chosen_influence: custom_influence
     custom_influence:
       conflicts:
-        - pair: [2, 7]
+        - pair: [1, 7]
           strength: -0.15
           unilateral: True
         - pair: [5, 2]
