@@ -17,7 +17,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "ip_different_extreme_starts.yaml"
+    _CONFIGURATION_DIRECTION / "mehmet_no_cycle.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
