@@ -17,7 +17,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "mehmet_cycle.yaml"
+    _CONFIGURATION_DIRECTION / "mehmet_lower_conflictV2.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
