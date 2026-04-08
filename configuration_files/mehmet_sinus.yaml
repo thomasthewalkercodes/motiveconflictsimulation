@@ -1,0 +1,101 @@
+# ─── Baseline Configuration ───────────────────────────────────
+# This is the default configuration
+# use it to create new experimental conditions.
+# Copy and paste this file, be sure to have the tag, notes & general settings
+# and the chosen_xxx, together with their parameters. 
+# Other information can be deleted to keep a better overview.
+# to test different chosen_influence for example, you just need to repeat
+# the "chosen_influence: xxx" to get it in the combinatorics
+# ──────────────────────────────────────────────────────────────
+
+tag: "mehmet_sinus" #make sure to use _ instead of space
+notes: "seeing if lower conflict strength has a different cyclical effect"
+
+# General settings
+seed: 42
+steps: 5000
+n_simulations: [1] # can be made into a list, like most factors here [x,y]
+n_motives: 8
+n_dialogue: 25 # a dialogue is a->b repeat a->b repeat
+# active_motive_steps should be higher than steps if you dont need it
+# should be x10 or x15 times lower than steps if it should matter
+active_motive_steps: 500
+decay: #all motives or a list [0, 2,4] for combinatorics
+    chosen_decay: cos_decay #options: all of the below
+    cos_decay:
+      motive_focus: "all_motives" # "all motives" or just a number
+      amplitude: 0.025
+      elevation: 0.05
+    flat_decay:
+      decay_rate: 0.02
+#budget for later rounds.
+total_budget: 0.5
+
+
+#BEWARE here are two agents to config!
+person_a: 
+  # Influence
+  influence:
+    chosen_influence: custom_influence
+    custom_influence:
+      conflicts:
+        - pair: [5, 7]
+          strength: -0.075
+          unilateral: True
+        - pair: [1, 7]
+          strength: -0.075
+          unilateral: True
+
+  # starting_values
+  starting_values:
+    chosen_starting_values: random_starting_values #options: all of the below
+    random_starting_values:
+      low: 0
+      high: 1
+
+  # Growth rules
+  growth: 
+    chosen_growth: flat_growth #options: all of the below
+    flat_growth:
+      growth_rate: 2
+
+  # activation check
+  activation_check:
+    chosen_activation_check: linear_check #options: all of the below
+    linear_check: {}
+
+
+##################
+## OTHER AGENT ###
+##################
+person_b: 
+  # Influence
+  influence:
+    chosen_influence: uni_bi_influence #options: all of the below
+    cosinus_influence:
+      amplitude: 0.1
+      elevation: 0.2
+    uni_bi_influence:
+      motive_focus: [[1,3]] #"all_pairs" # either "all_pairs" to test everything
+    # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
+      conflict_strength: -0.075
+      unilateral: True #True if non-mirrored, else false
+
+  # starting_values
+  starting_values:
+    chosen_starting_values: random_starting_values #options: all of the below
+    random_starting_values:
+      low: 0
+      high: 1
+
+  # Growth rules
+  growth: 
+    chosen_growth: flat_growth #options: all of the below
+    flat_growth:
+      growth_rate: 2
+
+  # activation check
+  activation_check:
+    chosen_activation_check: linear_check #options: all of the below
+    linear_check: {}
+

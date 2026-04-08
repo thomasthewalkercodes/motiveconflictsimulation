@@ -42,3 +42,11 @@ def custom_influence(satisfaction_levels, conflicts):
         if not conflict.get("unilateral", True):
             matrix[j, i] = conflict["strength"]
     return matrix
+
+
+def sinus_custom_influence(satisfaction_levels, amplitude, elevation, conflicts):
+    matrix = cosinus_influence(satisfaction_levels, amplitude, elevation)
+    custom_matrix = custom_influence(satisfaction_levels, conflicts)
+    combined_matrix = matrix + custom_matrix
+    combined_matrix = np.round(combined_matrix, 5)
+    return combined_matrix
