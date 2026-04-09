@@ -7,7 +7,7 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = "mehmet_lower_conflictV2"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+RUN_PREFIX = "ip_further_test"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
 #########################
 #########################
 
