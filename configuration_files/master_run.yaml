@@ -13,12 +13,12 @@ notes: "multiple runs for the master thesis"
 
 # General settings
 seed: 42
-steps: 1000000
+steps: 10000
 n_simulations: [1] # simething like this
 n_motives: 8
 # should be higher than steps if you dont need it
 # should be x10 or x15 times lower than steps if it should matter
-active_motive_steps: 1000
+active_motive_steps: 100
 
 
 # Influence
@@ -38,7 +38,7 @@ starting_values:
 decay:
   chosen_decay: cos_decay #options: all of the below
   cos_decay:
-    motive_focus: "all_motives"
+    motive_focus: 1
     amplitude: [0.00, 0.025, 0.05, 0.1]
     elevation: [0.01, 0.05, 0.1]
 
