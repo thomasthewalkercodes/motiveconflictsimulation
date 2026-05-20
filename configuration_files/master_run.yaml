@@ -25,7 +25,7 @@ active_motive_steps: 100
 influence:
   chosen_influence: cosinus_influence #options: all of the below
   cosinus_influence:
-    amplitude: [0.00, 0.01, 0.05, 0.1]
+    amplitude: [0.00, 0.025, 0.01, 0.05, 0.1]
     elevation: [0.00, 0.01, 0.05, 0.1]
 
 # starting_values
@@ -39,7 +39,7 @@ decay:
   chosen_decay: cos_decay #options: all of the below
   cos_decay:
     motive_focus: 1
-    amplitude: [0.00, 0.025, 0.05, 0.1]
+    amplitude: [0.00, 0.025, 0.01, 0.05, 0.1]
     elevation: [0.01, 0.05, 0.1]
 
 # Growth rules
