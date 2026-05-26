@@ -78,7 +78,7 @@ def adj_cos_influence_new(satisfaction_levels, amplitude, elevation, conflicts):
                 matrix[i, j] = 0
             else:
                 distance = min(
-                    abs(5 - j), len(satisfaction_levels) - abs(5 - j)
+                    abs(1 - j), len(satisfaction_levels) - abs(1 - j)
                 )  # distance from motive j to the nearest edge
                 angle = distance * (2 * np.pi / len(satisfaction_levels))
                 matrix[i, j] = amplitude * np.cos(angle) + elevation

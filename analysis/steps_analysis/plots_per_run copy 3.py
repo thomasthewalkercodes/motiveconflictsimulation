@@ -24,7 +24,7 @@ from matplotlib.patches import FancyArrowPatch
 # Just list the tag prefix; the date/time suffix is matched automatically.
 # Add or remove entries as you like.
 RUNS_TO_ANALYZE = [
-    "master_conflict_copy_copy_00017",  # active_motive_steps=50,   n_simulations=1
+    "master_conflict_structural_contra_00064",  # active_motive_steps=50,   n_simulations=1
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.
