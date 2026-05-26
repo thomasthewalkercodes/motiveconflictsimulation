@@ -1,0 +1,32 @@
+activation_check:
+  chosen_activation_check: linear_check
+  linear_check: {}
+active_motive_steps: 1000
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0.0
+    elevation: 0.05
+    motive_focus: 1
+growth:
+  chosen_growth: flat_growth
+  flat_growth:
+    growth_rate: 2
+influence:
+  chosen_influence: new_cos_influence
+  new_cos_influence:
+    amplitude: 0.01
+    elevation: 0.05
+n_motives: 8
+n_simulations: 1
+notes: doing the influence patterns to produce the same as the decay pattern
+seed: 42
+starting_values:
+  chosen_starting_values: random_starting_values
+  random_starting_values:
+    high: 1
+    low: -1
+steps: 100000
+tag: master_proof_inf_00034
+
+git_commit: a8832a732

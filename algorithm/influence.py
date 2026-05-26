@@ -42,6 +42,33 @@ def new_cos_influence(satisfaction_levels, amplitude, elevation):
     return matrix
 
 
+def adj_cos_influence(satisfaction_levels, amplitude, elevation, conflicts):
+    n = len(satisfaction_levels)
+    matrix = np.zeros((n, n))
+
+    for i in range(n):
+        for j in range(n):
+            if i == j:
+                matrix[i, j] = 0
+            else:
+                distance = min(abs(i - j), n - abs(i - j))
+                angle = distance * (2 * np.pi / n)
+                matrix[i, j] = amplitude * np.cos(angle) + elevation
+
+    matrix = (matrix + matrix.T) / 2
+    for conflict in conflicts:
+        i, j = conflict["pair"]
+        if i == j:
+            continue
+        strength = conflict["strength"]
+        matrix[i, j] = strength
+        if not conflict.get("unilateral", True):
+            matrix[j, i] = strength
+
+    matrix = np.round(matrix, 3)
+    return matrix
+
+
 def uni_bi_influence(
     satisfaction_levels, motive_focus, conflict_strength, unilateral=True
 ):

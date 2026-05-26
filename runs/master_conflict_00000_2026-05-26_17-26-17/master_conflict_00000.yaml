@@ -1,0 +1,38 @@
+activation_check:
+  chosen_activation_check: linear_check
+  linear_check: {}
+active_motive_steps: 1000
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0.025
+    elevation: 0.05
+    motive_focus: 0
+growth:
+  chosen_growth: flat_growth
+  flat_growth:
+    growth_rate: 2
+influence:
+  adj_cos_influence:
+    amplitude: 0.0
+    conflicts:
+    - pair:
+      - 0
+      - 4
+      strength: -0.15
+      unilateral: true
+    elevation: 0.05
+  chosen_influence: adj_cos_influence
+n_motives: 8
+n_simulations: 1
+notes: adjusting the conflict cells and other runs
+seed: 42
+starting_values:
+  chosen_starting_values: random_starting_values
+  random_starting_values:
+    high: 1
+    low: -1
+steps: 100000
+tag: master_conflict_00000
+
+git_commit: a8832a732
