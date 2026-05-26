@@ -32,7 +32,7 @@ def new_cos_influence(satisfaction_levels, amplitude, elevation):
                 matrix[i, j] = 0
             else:
                 distance = min(
-                    abs(1 - j), len(satisfaction_levels) - abs(1 - j)
+                    abs(5 - j), len(satisfaction_levels) - abs(5 - j)
                 )  # distance from motive j to the nearest edge
                 angle = distance * (2 * np.pi / len(satisfaction_levels))
                 matrix[i, j] = amplitude * np.cos(angle) + elevation
