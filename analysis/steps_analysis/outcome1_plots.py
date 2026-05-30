@@ -43,6 +43,17 @@ RUNS_TO_ANALYZE = [
     "outcome3_00008",  # only influence, low amplitude
     "outcome3_00024",  # only influence, medium amplitude
     "outcome3_00032",  # only influence, high amplitude
+    "outcome4_00032",  # no decay, normal inf focus, warm-cold conflict
+    "outcome4_00033",  # decay focus 0, normal inf focus, warm-cold conflict"
+    "outcome4_00035",  # decay focus 1, normal inf focus, warm-cold conflict
+    "outcome4_00037",  # decay focus 2, normal inf focus, warm-cold conflict"
+    "outcome4_00039",  # decay focus 3, normal inf focus, warm-cold conflict"
+    "outcome4_00041",  # decay focus 4, normal inf focus, warm-cold conflict"
+    "outcome4_00043",  # decay focus 5, normal inf focus, warm-cold conflict"
+    "outcome4_00045",  # decay focus 6, normal inf focus, warm-cold conflict"
+    "outcome4_00047",  # decay focus 7, normal inf focus, warm-cold conflict"
+    "outcome5_00016",  # no decay, normal inf focus, cold-cold conflict
+    "outcome5_00017",  # decay focus 0, normal inf focus, cold-cold conflict"
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.
