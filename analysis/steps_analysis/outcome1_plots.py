@@ -1,12 +1,14 @@
-# Per-run plots for the master_reliability experiment.
+# Per-simulation plots for the outcome experiments.
 #
-# For each run listed in RUNS_TO_ANALYZE this script saves two PNGs into
-# a subfolder next to this file:
+# For each run listed in RUNS_TO_ANALYZE this script walks every
+# simulation_*.csv inside the run folder and saves two PNGs *per simulation*
+# into a subfolder next to this file:
 #   1) a spider/radar plot of the proportional occurrence of each motive,
 #      with motive 1 on the right and the rest going around counterclockwise
 #      (so motive 2 sits above motive 1, etc.).
-#   2) a Markov-chain diagram showing how likely each motive is to follow
-#      another motive.
+#   2) a Markov-chain diagram showing which motives most often follow each
+#      other.
+# Output filenames look like "<run_tag>_simN_spider.png" / "_markov.png".
 #
 # The style is APA 7 friendly: serif font, plain white background, no
 # chartjunk, 300 dpi.
@@ -34,7 +36,7 @@ RUNS_TO_ANALYZE = [
     "outcome2_00004",  # 100 steps
     "outcome2_00005",  # 500 steps
     "outcome2_00006",  # 1000 steps
-    "outcome2_000012",  # 500 steps, 5 sims
+    "outcome2_00012",  # 500 steps, 5 sims
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.
@@ -219,32 +221,42 @@ for run_tag in RUNS_TO_ANALYZE:
     active_steps = cfg.get("active_motive_steps", "?")
     n_sims = cfg.get("n_simulations", "?")
 
-    # Load active_motive sequences (one per simulation, NaNs dropped).
-    sequences = []
-    for sim_file in sorted(glob.glob(os.path.join(run_dir, "simulation_*.csv"))):
-        df = pd.read_csv(sim_file, usecols=["active_motive"])
-        seq = df["active_motive"].dropna().astype(int).tolist()
-        sequences.append(seq)
-    if not sequences:
+    # One spider + one markov plot per simulation CSV in the run folder.
+    # The filename ".../simulation_3.csv" turns into the suffix "sim3".
+    sim_files = sorted(glob.glob(os.path.join(run_dir, "simulation_*.csv")))
+    if not sim_files:
         print(f"  [skip] no simulation_*.csv in {run_tag}")
         continue
-
-    # Compute the two things we plot.
-    props = proportions_from_sequences(sequences)
-    trans = transition_matrix_from_sequences(sequences)
 
     # Titles are intentionally omitted from the PNGs; the filename and the
     # run's yaml carry the active_motive_steps / n_simulations info.
     _ = (active_steps, n_sims)  # kept for the console log below
 
-    spider_path = os.path.join(OUTPUT_DIR, f"{run_tag}_spider.png")
-    markov_path = os.path.join(OUTPUT_DIR, f"{run_tag}_markov.png")
+    for sim_file in sim_files:
+        # Extract the sim index from "simulation_N.csv" so the output PNGs
+        # stay grouped by run + clearly labelled per simulation.
+        sim_basename = os.path.splitext(os.path.basename(sim_file))[0]
+        sim_index = sim_basename.split("_")[-1]
 
-    make_spider_plot(props, spider_path)
-    make_markov_plot(trans, markov_path)
-    print(
-        f"  saved {os.path.basename(spider_path)} and "
-        f"{os.path.basename(markov_path)}"
-    )
+        df = pd.read_csv(sim_file, usecols=["active_motive"])
+        seq = df["active_motive"].dropna().astype(int).tolist()
+        if not seq:
+            print(f"  [skip] empty active_motive in {sim_basename}")
+            continue
+
+        # Helper functions accept a *list* of sequences — wrap the single
+        # simulation's sequence in a one-element list so nothing else changes.
+        props = proportions_from_sequences([seq])
+        trans = transition_matrix_from_sequences([seq])
+
+        spider_path = os.path.join(OUTPUT_DIR, f"{run_tag}_sim{sim_index}_spider.png")
+        markov_path = os.path.join(OUTPUT_DIR, f"{run_tag}_sim{sim_index}_markov.png")
+
+        make_spider_plot(props, spider_path)
+        make_markov_plot(trans, markov_path)
+        print(
+            f"  saved {os.path.basename(spider_path)} and "
+            f"{os.path.basename(markov_path)}"
+        )
 
 print(f"\nDone. Plots are in {OUTPUT_DIR}")
