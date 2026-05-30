@@ -53,7 +53,8 @@ RUNS_TO_ANALYZE = [
     "outcome4_00045",  # decay focus 6, normal inf focus, warm-cold conflict"
     "outcome4_00047",  # decay focus 7, normal inf focus, warm-cold conflict"
     "outcome5_00016",  # no decay, normal inf focus, cold-cold conflict
-    "outcome5_00017",  # decay focus 0, normal inf focus, cold-cold conflict"
+    "outcome5_00017",  # decay, normal inf focus, cold-cold conflict
+    "outcome6_00000",  # no decay, inf focus, no conflict
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.
