@@ -37,6 +37,12 @@ RUNS_TO_ANALYZE = [
     "outcome2_00005",  # 500 steps
     "outcome2_00006",  # 1000 steps
     "outcome2_00012",  # 500 steps, 5 sims
+    "outcome3_00001",  # only decay, low amplitude
+    "outcome3_00002",  # only decay, medium amplitude
+    "outcome3_00003",  # only decay, high amplitude
+    "outcome3_00008",  # only influence, low amplitude
+    "outcome3_00024",  # only influence, medium amplitude
+    "outcome3_00032",  # only influence, high amplitude
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.

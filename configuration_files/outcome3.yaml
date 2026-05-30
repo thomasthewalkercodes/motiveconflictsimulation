@@ -39,7 +39,7 @@ decay:
   chosen_decay: cos_decay #options: all of the below
   cos_decay:
     motive_focus: 0
-    amplitude: [0, 0.025]
+    amplitude: [0, 0.01, 0.025, 0.05]
     elevation: [0.05]
 
 # Growth rules
