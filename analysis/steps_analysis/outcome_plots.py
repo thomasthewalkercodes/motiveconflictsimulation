@@ -21,6 +21,7 @@ import numpy as np
 import pandas as pd
 import yaml
 from matplotlib.patches import FancyArrowPatch
+from matplotlib.transforms import ScaledTranslation
 
 # ── Configure which runs to plot ─────────────────────────────────────────
 # Just list the tag prefix; the date/time suffix is matched automatically.
@@ -55,6 +56,9 @@ RUNS_TO_ANALYZE = [
     "outcome5_00016",  # no decay, normal inf focus, cold-cold conflict
     "outcome5_00017",  # decay, normal inf focus, cold-cold conflict
     "outcome6_00000",  # no decay, inf focus, no conflict
+    "outcome11_00000",  # high decay no inf
+    "outcome11_00004",  # medium decay no inf
+    "outcome11_00008",  # low decay no inf
 ]
 
 # Markov diagram: only draw arrows for transitions with P(j|i) above this.
@@ -132,8 +136,8 @@ def transition_matrix_from_sequences(sequences):
 # ── Step 2: the spider plot ──────────────────────────────────────────────
 def make_spider_plot(proportions, output_path):
     # One angle per motive. matplotlib's polar default has 0° at the right
-    # and counterclockwise as positive, which is exactly what we want:
-    # motive 1 on the right, then motive 2 above-right, etc.
+    # and counterclockwise as positive — motive 1 right, motive 2 above-right,
+    # so the four cardinal directions land on motives 1, 3, 5, 7.
     angles = np.array([i * 2 * np.pi / N_MOTIVES for i in range(N_MOTIVES)])
 
     # Close the polygon by repeating the first value at the end.
@@ -142,22 +146,56 @@ def make_spider_plot(proportions, output_path):
 
     fig, ax = plt.subplots(figsize=(6.5, 6.5), subplot_kw=dict(polar=True))
 
+    # The polygon itself (still in proportion-space, unchanged shape).
     ax.plot(angles_closed, values_closed, color="black", lw=1.5)
     ax.fill(angles_closed, values_closed, color="gray", alpha=0.25)
 
-    # Motive labels around the edge (agency / communion notation).
+    # All 8 spokes are drawn so the diagonal octants get their lines back,
+    # but only the four cardinal directions get a name.
     ax.set_xticks(angles)
-    ax.set_xticklabels(MOTIVE_LABELS)
+    ax.set_xticklabels(["warm", "", "dominant", "", "cold", "", "submissive", ""])
+    ax.tick_params(axis="x", labelsize=14)  # bigger axis words
 
-    # A small amount of headroom so the line doesn't kiss the outer ring.
-    ymax = max(proportions) * 1.2
+    # Pull just the "warm" label inward (a few points leftward) so it sits
+    # closer to the outer ring instead of floating outside the plot frame.
+    warm_shift = ScaledTranslation(-6 / 72, 0, fig.dpi_scale_trans)
+    warm_label = ax.get_xticklabels()[0]
+    warm_label.set_transform(warm_label.get_transform() + warm_shift)
+
+    # Make sure all rings (up to 0.225) fit comfortably inside the plot
+    # area regardless of polygon size.
+    ymax = max(max(proportions) * 1.3, 0.25)
     ax.set_ylim(0, ymax)
-    # Show only every second 0.025-step tick: 0.025, 0.075, 0.125, ...
-    ticks = np.arange(0.025, ymax, 0.05)
-    ax.set_yticks(ticks)
-    ax.set_yticklabels([f"{t:.3f}" for t in ticks])
-    ax.set_rlabel_position(90)  # move the radial tick labels off the data
+
+    # Five concentric rings at 0.025, 0.075, 0.125, 0.175, 0.225 (no labels).
+    # The 0.125 ring is the reference and is overlaid in a darker style
+    # so it stands out from the others.
+    ax.set_yticks([0.025, 0.075, 0.125, 0.175, 0.225])
+    ax.set_yticklabels(["", "", "", "", ""])
     ax.grid(color="lightgray", lw=0.5)
+    theta_ring = np.linspace(0, 2 * np.pi, 200)
+    ax.plot(
+        theta_ring,
+        [0.125] * len(theta_ring),
+        color="dimgray",
+        lw=1.4,
+        zorder=1.5,
+    )
+
+    # Per-octant value as a percentage with at most one decimal place,
+    # placed near each vertex of the octagon with a small white background
+    # patch so the underlying axis / polygon line doesn't muddle the digits.
+    label_offset = ymax * 0.06
+    for i in range(N_MOTIVES):
+        ax.text(
+            angles[i],
+            proportions[i] + label_offset,
+            f"{proportions[i] * 100:.1f}%",
+            ha="center",
+            va="center",
+            fontsize=12,
+            bbox=dict(facecolor="white", edgecolor="none", pad=1.5),
+        )
 
     fig.savefig(output_path)
     plt.close(fig)
