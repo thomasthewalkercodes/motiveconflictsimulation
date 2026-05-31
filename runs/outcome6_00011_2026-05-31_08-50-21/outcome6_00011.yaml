@@ -1,0 +1,38 @@
+activation_check:
+  chosen_activation_check: linear_check
+  linear_check: {}
+active_motive_steps: 1000
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0
+    elevation: 0.05
+    motive_focus: 3
+growth:
+  chosen_growth: flat_growth
+  flat_growth:
+    growth_rate: 2
+influence:
+  adj_cos_influence_new:
+    amplitude: 0.1
+    conflicts:
+    - pair:
+      - 0
+      - 0
+      strength: 2
+      unilateral: false
+    elevation: 0.2
+  chosen_influence: adj_cos_influence_new
+n_motives: 8
+n_simulations: 1
+notes: 0 decay, inf focus and no conflict
+seed: 42
+starting_values:
+  chosen_starting_values: random_starting_values
+  random_starting_values:
+    high: 1
+    low: -1
+steps: 100000
+tag: outcome6_00011
+
+git_commit: d5d0a43ab

@@ -1,0 +1,39 @@
+activation_check:
+  chosen_activation_check: linear_check
+  linear_check: {}
+active_motive_steps: 1000
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0
+    elevation: 0.05
+    motive_focus: 0
+growth:
+  chosen_growth: flat_growth
+  flat_growth:
+    growth_rate: 2
+influence:
+  adj_cos_influence_new:
+    amplitude: 0
+    conflicts:
+    - pair:
+      - 0
+      - 4
+      strength: -0.2
+      unilateral: false
+    elevation: 0.1
+  chosen_influence: adj_cos_influence_new
+n_motives: 8
+n_simulations: 1
+notes: different only influence function and only decay function run for outcomes
+  in these functions
+seed: 42
+starting_values:
+  chosen_starting_values: random_starting_values
+  random_starting_values:
+    high: 1
+    low: -1
+steps: 100000
+tag: outcome4_00016
+
+git_commit: d5d0a43ab

@@ -7,7 +7,9 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = "ip_motiveconflict"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+RUN_PREFIX = (
+    "outcome7"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+)
 #########################
 #########################
 

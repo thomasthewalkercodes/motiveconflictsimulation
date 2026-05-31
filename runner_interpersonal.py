@@ -17,7 +17,7 @@ _CONFIGURATION_DIRECTION = Path(__file__).resolve().parent / "configuration_file
 #########################
 #########################
 CONFIG = (
-    _CONFIGURATION_DIRECTION / "outcome7.yaml"
+    _CONFIGURATION_DIRECTION / "outcome9.yaml"
 )  # <- INPUT YOUR DESIRED CONFIG FILE HERE
 #########################
 #########################
