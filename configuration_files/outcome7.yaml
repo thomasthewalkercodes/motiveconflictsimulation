@@ -35,12 +35,13 @@ total_budget: 0.5
 #BEWARE here are two agents to config!
 person_a: 
   # Influence
+  # Influence
   influence:
     chosen_influence: circumplex_conflict_influence
     circumplex_conflict_influence:
-        amplitude: 0.005 # change this one in the next iterarion
+        amplitude: 0.005
         elevation: 0.01
-        warmth_cold_strength: 0 #-0.05
+        warmth_cold_strength: 0
         dominance_submission_strength: 0
 
   # starting_values

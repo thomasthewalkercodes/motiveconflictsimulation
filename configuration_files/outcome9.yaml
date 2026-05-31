@@ -36,12 +36,13 @@ total_budget: 0.5
 person_a: 
   # Influence
   influence:
-    chosen_influence: circumplex_conflict_influence
-    circumplex_conflict_influence:
-        amplitude: 0.005 # change this one in the next iterarion
-        elevation: 0.01
-        warmth_cold_strength: -0.05
-        dominance_submission_strength: 0
+    chosen_influence: custom_influence
+    custom_influence:
+      conflicts:
+        - pair: [0, 4]
+          strength: -0.15
+          unilateral: False
+
 
   # starting_values
   starting_values:
@@ -68,12 +69,12 @@ person_a:
 person_b: 
   # Influence
   influence:
-    chosen_influence: circumplex_conflict_influence
-    circumplex_conflict_influence:
-        amplitude: 0.005
-        elevation: 0.01
-        warmth_cold_strength: 0
-        dominance_submission_strength: -0.05
+    chosen_influence: custom_influence
+    custom_influence:
+      conflicts:
+        - pair: [2, 6]
+          strength: -0.15
+          unilateral: False
 
   # starting_values
   starting_values:
