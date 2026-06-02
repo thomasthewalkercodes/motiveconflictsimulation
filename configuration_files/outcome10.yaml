@@ -41,10 +41,10 @@ person_a:
       conflicts:
         - pair: [1, 7]
           strength: -0.15
-          unilateral: True
+          unilateral: False
         - pair: [5, 7]
           strength: -0.15
-          unilateral: True
+          unilateral: False
 
   # starting_values
   starting_values:
@@ -78,8 +78,8 @@ person_b:
     uni_bi_influence:
       motive_focus: [[1,3]] #"all_pairs" # either "all_pairs" to test everything
     # or you can use a list eg. [[0,1], [2,1], etc...] for specific pairs
-      conflict_strength: [0,-0.15]
-      unilateral: True #True if non-mirrored, else false
+      conflict_strength: [-0.15]
+      unilateral: False #True if non-mirrored, else false
 
   # starting_values
   starting_values:

@@ -8,10 +8,8 @@ import yaml
 
 #########################
 #########################
-RUN_PREFIX = (
-    "outcome8"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
-)
-#########################
+RUN_PREFIX = "outcome10"  # <- INPUT YOUR RUN PREFIX HERE (to filter which runs to make films for)
+#########################s
 #########################
 
 RUNS_DIR = Path(__file__).resolve().parents[2] / "runs"
