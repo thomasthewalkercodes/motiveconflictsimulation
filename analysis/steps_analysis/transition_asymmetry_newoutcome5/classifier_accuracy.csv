@@ -1,0 +1,3 @@
+condition,n_rounds_each,markov_LR_accuracy,circulation_only_accuracy
+newoutcome5_00000,1000,1.0,0.73
+ALL,1000,1.0,0.7335

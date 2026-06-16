@@ -1,0 +1,61 @@
+active_motive_steps: 1000
+decay:
+  chosen_decay: cos_decay
+  cos_decay:
+    amplitude: 0.05
+    elevation: 0.1
+    motive_focus: 3
+  flat_decay:
+    decay_rate: 0.02
+n_dialogue: 25
+n_motives: 8
+n_simulations: 1
+notes: ' one person conflict dyad with varying context'
+person_a:
+  activation_check:
+    chosen_activation_check: linear_check
+    linear_check: {}
+  growth:
+    chosen_growth: flat_growth
+    flat_growth:
+      growth_rate: 2
+  influence:
+    chosen_influence: custom_influence
+    custom_influence:
+      conflicts:
+      - pair:
+        - 0
+        - 4
+        strength: -0.15
+        unilateral: false
+  starting_values:
+    chosen_starting_values: random_starting_values
+    random_starting_values:
+      high: 1
+      low: 0
+person_b:
+  activation_check:
+    chosen_activation_check: linear_check
+    linear_check: {}
+  growth:
+    chosen_growth: flat_growth
+    flat_growth:
+      growth_rate: 2
+  influence:
+    chosen_influence: circumplex_conflict_influence
+    circumplex_conflict_influence:
+      amplitude: 0.005
+      dominance_submission_strength: 0
+      elevation: 0.01
+      warmth_cold_strength: 0
+  starting_values:
+    chosen_starting_values: random_starting_values
+    random_starting_values:
+      high: 1
+      low: 0
+seed: 42
+steps: 50000
+tag: newoutcome1_00023
+total_budget: 0.5
+
+git_commit: 382ee9f04

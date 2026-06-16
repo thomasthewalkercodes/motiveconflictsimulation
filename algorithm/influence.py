@@ -23,6 +23,40 @@ def cosinus_influence(satisfaction_levels, amplitude, elevation):
     return matrix
 
 
+def cosinus_influence2(satisfaction_levels, amplitude, elevation):
+    matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
+
+    for i in range(len(satisfaction_levels)):
+        for j in range(len(satisfaction_levels)):
+            if i == j:
+                matrix[i, j] = 0
+            else:
+                distance = min(abs(i - j), len(satisfaction_levels) - abs(i - j))
+                angle = distance * (2 * np.pi / len(satisfaction_levels))
+                matrix[i, j] = amplitude * np.cos(angle) + elevation
+    matrix[0, 4] = -0.15
+    matrix[4, 0] = -0.15
+    matrix = (matrix + matrix.T) / 2
+    matrix = np.round(matrix, 3)
+    return matrix
+
+def cosinus_influence3(satisfaction_levels):
+    matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
+
+    for i in range(len(satisfaction_levels)):
+        for j in range(len(satisfaction_levels)):
+            if i == j:
+                matrix[i, j] = 0
+            else:
+                random_value = np.random.uniform(-0.05, 0.05)  # Random value between -0.05 and 0.05
+                matrix[i, j] = random_value
+
+    matrix = (matrix + matrix.T) / 2
+    matrix = np.round(matrix, 3)
+    return matrix
+
+
+
 def new_cos_influence(satisfaction_levels, amplitude, elevation):
     matrix = np.zeros((len(satisfaction_levels), len(satisfaction_levels)))
 
